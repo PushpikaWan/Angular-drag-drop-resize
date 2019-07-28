@@ -47,4 +47,9 @@ export class DashboardComponent implements OnInit, OnDestroy {
     }
   }
 
+  removeItem(id: number){
+    console.log("delete id", id);
+    this.dashBoardService.removeItem(id);
+  }
+
 }

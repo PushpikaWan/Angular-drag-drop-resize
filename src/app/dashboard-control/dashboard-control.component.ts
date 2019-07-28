@@ -16,9 +16,7 @@ export class DashboardControlComponent implements OnInit {
   ngOnInit() {
     this.dashboardService.dashboardComponentListChanged.subscribe(
       (items: Object[]) => {
-    console.log("button clicked",items);
         this.availableColumns = items.length;
-        console.log("button clicked",items);
       }
     );
   }
@@ -37,6 +35,14 @@ export class DashboardControlComponent implements OnInit {
 
   selectChangeHandler (event: any) {
     this.selectedColumn = event.target.value;
+  }
+
+  removeEmptyCells(){
+    this.dashboardService.removeAllUnusedLists();
+  }
+
+  resetPanel(){
+    this.dashboardService.resetPanel();
   }
 
   counter(i: number) {

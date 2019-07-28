@@ -1,7 +1,10 @@
-<div>
+<div class="vertical_inline_item_container">
     <button mat-raised-button color="primary"(click)="addHorizontalPanel()">add horizontal panel</button>
+    <button mat-raised-button color="primary"(click)="removeEmptyCells()">remove empty cells</button>
+    <button mat-raised-button color="primary"(click)="resetPanel()">reset</button>
 </div>
-<div class="vertical_add_item_container">
+<br/>
+<div class="vertical_inline_item_container">
         <select (change)="selectChangeHandler($event)">
             <option *ngFor='let in of counter(availableColumns);let i = index' value="{{i}}">{{i}}</option>
         </select>

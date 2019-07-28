@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { DashboardControllingService } from '../services/dashboard-controlling.service';
 
 @Component({
   selector: 'app-dashboard-control',
@@ -7,9 +8,15 @@ import { Component, OnInit } from '@angular/core';
 })
 export class DashboardControlComponent implements OnInit {
 
-  constructor() { }
+  constructor(private dashboardService: DashboardControllingService) { }
 
   ngOnInit() {
+   
   }
+
+  addPanel(){
+    this.dashboardService.addItem();
+  }
+
 
 }

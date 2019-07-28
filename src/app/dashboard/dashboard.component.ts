@@ -1,58 +1,41 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 
 import {CdkDragDrop, moveItemInArray, transferArrayItem, CdkDrag} from '@angular/cdk/drag-drop';
+import { DashboardControllingService } from '../services/dashboard-controlling.service';
 
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.component.html',
   styleUrls: ['./dashboard.component.css']
 })
-export class DashboardComponent {
+export class DashboardComponent implements OnInit, OnDestroy {
 
-  counter = 12;
-  horizontalLists = [];
   connectedTo = [];
+  horizontalLists = [];
 
-  constructor()
-  {
-    this.initaliseDashboard(); 
+  constructor(private dashBoardService: DashboardControllingService)
+  {}
+
+  ngOnInit(): void {
+    this.dashBoardService.dashboardComponentListChanged.subscribe(
+      (items: Object[]) => {
+    console.log("button clicked",items);
+        this.horizontalLists = items;
+        this.initaliseDashboard(items); 
+      }
+    );
   }
 
-  private initaliseDashboard()
-  {
-    this.horizontalLists = [
-      {
-        id:'list_0',
-        cardList:[
-          "card_01",
-          "card_02",
-          "card_03"
-        ]
-      },
-      {
-        id:'list_1',
-        cardList:[
-          "card_11",
-          "card_12",
-          "card_13"
-        ]
-      },
-      {
-        id:'list_2',
-        cardList:[
-          "card_21",
-          "card_22",
-          "card_23"
-        ]
-      }
-    ];
+  ngOnDestroy(): void {
+    this.dashBoardService.dashboardComponentListChanged.unsubscribe();
+  }
 
-    for (let cardList of this.horizontalLists) {
+  private initaliseDashboard(items: any[])
+  {
+    for (let cardList of items) {
       this.connectedTo.push(cardList.id);
     };
   }
-
-
 
   drop(event: CdkDragDrop<string[]>) {
     if (event.previousContainer === event.container) {
@@ -63,11 +46,6 @@ export class DashboardComponent {
                         event.previousIndex,
                         event.currentIndex);
     }
-  }
-
-  addHorizontalList(){
-    this.horizontalLists.push([this.counter]);
-    this.counter++;
   }
 
 }

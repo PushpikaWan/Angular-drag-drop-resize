@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild, ElementRef } from '@angular/core';
 
 import {CdkDragDrop, moveItemInArray, transferArrayItem, CdkDrag} from '@angular/cdk/drag-drop';
 
@@ -9,12 +9,9 @@ import {CdkDragDrop, moveItemInArray, transferArrayItem, CdkDrag} from '@angular
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
-/**
- * @title Drag&Drop enter predicate
- */
+
 export class AppComponent {
   title = 'angular-drag-drop-resize';
-
 
   counter = 12;
   horizontalLists = [];
@@ -22,7 +19,7 @@ export class AppComponent {
 
   constructor()
   {
-    this.initaliseDashboard();
+    this.initaliseDashboard(); 
   }
 
   private initaliseDashboard()

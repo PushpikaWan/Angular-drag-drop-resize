@@ -1,21 +1,21 @@
 <div class="dashboard" fxLayout="row">
-    <div class="dashboard-list-container" 
-        *ngFor="let hList of horizontalLists; let i = index">
-      <div class="dashboard-list">
-         <div cdkDropList id="{{hList.id}}" [cdkDropListData]="hList.cardList"
-           class="example-list" [cdkDropListConnectedTo]="connectedTo" (cdkDropListDropped)="drop($event)">
-          <div class="example-box" *ngFor="let item of hList.cardList" cdkDrag>{{item.name}}
+  <div class="dashboard-list-container" *ngFor="let hList of horizontalLists; let i = index">
+    <div class="dashboard-list">
+      <div cdkDropList id="{{hList.id}}" [cdkDropListData]="hList.cardList" class="example-list"
+        [cdkDropListConnectedTo]="connectedTo" (cdkDropListDropped)="drop($event)">
+        <div class="example-box" *ngFor="let item of hList.cardList" cdkDrag>{{item.name}}
           <!-- <svg width="24px" fill="currentColor" viewBox="0 0 24 24" (click)="removeItem(item.id)">
             <path d="M10 9h4V6h3l-5-5-5 5h3v3zm-1 1H6V7l-5 5 5 5v-3h3v-4zm14 2l-5-5v3h-3v4h3v3l5-5zm-9 3h-4v3H7l5 5 5-5h-3v-3z">
             </path>
             <path d="M0 0h24v24H0z" fill="none"></path>
           </svg> -->
-          <svg class="example-handle"  (click)="removeItem(item.id)" viewPort="0 0 12 12" version="1.1" xmlns="http://www.w3.org/2000/svg">
+          <svg class="example-handle" (click)="removeItem(item.id)" viewPort="0 0 12 12" version="1.1"
+            xmlns="http://www.w3.org/2000/svg">
             <line x1="1" y1="11" x2="11" y2="1" stroke="black" stroke-width="2" />
             <line x1="1" y1="1" x2="11" y2="11" stroke="black" stroke-width="2" />
           </svg>
-          </div>
         </div>
       </div>
     </div>
-  </div>  
+  </div>
+</div>

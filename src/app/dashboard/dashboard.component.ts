@@ -1,6 +1,6 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 
-import {CdkDragDrop, moveItemInArray, transferArrayItem, CdkDrag} from '@angular/cdk/drag-drop';
+import { CdkDragDrop, moveItemInArray, transferArrayItem, CdkDrag } from '@angular/cdk/drag-drop';
 import { DashboardControllingService } from '../services/dashboard-controlling.service';
 
 @Component({
@@ -13,14 +13,13 @@ export class DashboardComponent implements OnInit, OnDestroy {
   connectedTo = [];
   horizontalLists = [];
 
-  constructor(private dashBoardService: DashboardControllingService)
-  {}
+  constructor(private dashBoardService: DashboardControllingService) { }
 
   ngOnInit(): void {
     this.dashBoardService.dashboardComponentListChanged.subscribe(
       (items: Object[]) => {
         this.horizontalLists = items;
-        this.initaliseDashboard(items); 
+        this.initaliseDashboard(items);
       }
     );
   }
@@ -29,8 +28,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
     this.dashBoardService.dashboardComponentListChanged.unsubscribe();
   }
 
-  private initaliseDashboard(items: any[])
-  {
+  private initaliseDashboard(items: any[]) {
     for (let cardList of items) {
       this.connectedTo.push(cardList.id);
     };
@@ -41,13 +39,13 @@ export class DashboardComponent implements OnInit, OnDestroy {
       moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
     } else {
       transferArrayItem(event.previousContainer.data,
-                        event.container.data,
-                        event.previousIndex,
-                        event.currentIndex);
+        event.container.data,
+        event.previousIndex,
+        event.currentIndex);
     }
   }
 
-  removeItem(id: number){
+  removeItem(id: number) {
     console.log("delete id", id);
     this.dashBoardService.removeItem(id);
   }

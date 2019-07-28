@@ -8,7 +8,7 @@ import { DashboardControllingService } from '../services/dashboard-controlling.s
 })
 export class DashboardControlComponent implements OnInit {
 
-  availableColumns: number = 0 ;
+  availableColumns: number = 0;
   selectedColumn: number = 0;
 
   constructor(private dashboardService: DashboardControllingService) { }
@@ -25,23 +25,23 @@ export class DashboardControlComponent implements OnInit {
     this.dashboardService.dashboardComponentListChanged.unsubscribe();
   }
 
-  addVerticalPanel(){
+  addVerticalPanel() {
     this.dashboardService.addVerticalItem(this.selectedColumn);
   }
 
-  addHorizontalPanel(){
+  addHorizontalPanel() {
     this.dashboardService.addHorizontalItem();
   }
 
-  selectChangeHandler (event: any) {
+  selectChangeHandler(event: any) {
     this.selectedColumn = event.target.value;
   }
 
-  removeEmptyCells(){
+  removeEmptyCells() {
     this.dashboardService.removeAllUnusedLists();
   }
 
-  resetPanel(){
+  resetPanel() {
     this.dashboardService.resetPanel();
   }
 

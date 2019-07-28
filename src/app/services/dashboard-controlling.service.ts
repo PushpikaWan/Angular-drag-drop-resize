@@ -6,10 +6,7 @@ import { Subject } from 'rxjs';
 })
 
 
-// todo remove height that get using view port
-//todo add delete button to empty list
-//todo add delete button to components
-//todo add reset button
+// todo create customizable width and height of dashboard
 //todo can only one place to drag and go to angular cdk options and apply that can be applied
 
 
@@ -40,7 +37,7 @@ export class DashboardControllingService {
         cardList: [{ id: this.counter, name: 'card_' + this.counter }]
       }
     );
-    console.log("cur length",this.horizontalLists.length);
+    console.log("cur length", this.horizontalLists.length);
     this.updateAfterItemAdded();
   }
 
@@ -54,18 +51,17 @@ export class DashboardControllingService {
    * remove cardlist item of given id 
    * @param id card list item id
    */
-  removeItem(id: number)
-  {
+  removeItem(id: number) {
     this.horizontalLists.forEach(function (value_list) {
-      value_list.cardList.forEach(function(element, index) {
-        if(id === element.id){
+      value_list.cardList.forEach(function (element, index) {
+        if (id === element.id) {
           value_list.cardList.splice(index, 1);
         }
       })
-    }); 
+    });
   }
 
-  removeAllUnusedLists(){
+  removeAllUnusedLists() {
     this.horizontalLists = this.horizontalLists.filter(function (e) {
       return e.cardList.length > 0;
     });

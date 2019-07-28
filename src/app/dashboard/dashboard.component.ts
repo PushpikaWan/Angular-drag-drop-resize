@@ -19,7 +19,6 @@ export class DashboardComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.dashBoardService.dashboardComponentListChanged.subscribe(
       (items: Object[]) => {
-    console.log("button clicked",items);
         this.horizontalLists = items;
         this.initaliseDashboard(items); 
       }

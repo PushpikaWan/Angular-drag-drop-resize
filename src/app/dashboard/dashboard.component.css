@@ -27,7 +27,7 @@
     border: solid 1px #ccc;
     background: white;
     border-radius: 4px;
-    overflow: hidden;
+    overflow: hidden; /* todo add scroll after change the  height correctly*/
     display: flex;
     flex-direction: column;
   }

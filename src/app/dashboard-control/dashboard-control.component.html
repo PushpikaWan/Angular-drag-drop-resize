@@ -1,1 +1,9 @@
-<button mat-raised-button color="primary"(click)="addPanel()">add panel</button>
+<div>
+    <button mat-raised-button color="primary"(click)="addHorizontalPanel()">add horizontal panel</button>
+</div>
+<div class="vertical_add_item_container">
+        <select (change)="selectChangeHandler($event)">
+            <option *ngFor='let in of counter(availableColumns);let i = index' value="{{i}}">{{i}}</option>
+        </select>
+       <button mat-raised-button color="primary"(click)="addVerticalPanel()">add vertical panel</button>
+</div>

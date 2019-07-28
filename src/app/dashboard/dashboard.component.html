@@ -4,7 +4,7 @@
       <div class="dashboard-list">
          <div cdkDropList id="{{hList.id}}" [cdkDropListData]="hList.cardList"
            class="example-list" [cdkDropListConnectedTo]="connectedTo" (cdkDropListDropped)="drop($event)">
-          <div class="example-box" *ngFor="let item of hList.cardList" cdkDrag>{{item}}</div>
+          <div class="example-box" *ngFor="let item of hList.cardList" cdkDrag>{{item.name}}</div>
         </div>
       </div>
     </div>

@@ -1,13 +1,2 @@
-<div class="dashboard" fxLayout="row">
-  <div class="dashboard-list-container" 
-      *ngFor="let hList of horizontalLists; let i = index">
-    <div class="dashboard-list">
-       <div cdkDropList id="{{hList.id}}" [cdkDropListData]="hList.cardList"
-         class="example-list" [cdkDropListConnectedTo]="connectedTo" (cdkDropListDropped)="drop($event)">
-        <div class="example-box" *ngFor="let item of hList.cardList" cdkDrag>{{item}}</div>
-      </div>
-    </div>
-  </div>
-</div>
-
-
+<app-dashboard-control></app-dashboard-control>
+<app-dashboard></app-dashboard>

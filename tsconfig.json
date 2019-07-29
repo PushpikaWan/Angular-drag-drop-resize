@@ -17,7 +17,15 @@
     "lib": [
       "es2018",
       "dom"
-    ]
+    ],
+    "paths": {
+      "angular-drag-drop-rearrange": [
+        "dist/angular-drag-drop-rearrange"
+      ],
+      "angular-drag-drop-rearrange/*": [
+        "dist/angular-drag-drop-rearrange/*"
+      ]
+    }
   },
   "angularCompilerOptions": {
     "fullTemplateTypeCheck": true,

@@ -12,13 +12,13 @@
     "directive-selector": [
       true,
       "attribute",
-      "app",
+      "angDdr",
       "camelCase"
     ],
     "component-selector": [
       true,
       "element",
-      "app",
+      "ang-ddr",
       "kebab-case"
     ],
     "import-blacklist": [

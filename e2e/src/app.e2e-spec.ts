@@ -10,7 +10,7 @@ describe('workspace-project App', () => {
 
   it('should display welcome message', () => {
     page.navigateTo();
-    expect(page.getTitleText()).toEqual('Welcome to angular-drag-drop-resize!');
+    expect(page.getTitleText()).toEqual('Welcome to angular-darg-drop-rearrange!');
   });
 
   afterEach(async () => {

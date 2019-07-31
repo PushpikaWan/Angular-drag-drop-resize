@@ -1,0 +1,26 @@
+:host {
+    display: block;
+  
+    .container {
+      margin: 0 auto !important;
+      max-width: 1024px;
+    }
+  
+    .opts {
+      margin: 20px 0;
+  
+      label {
+        display: inline-block;
+        padding: 10px 20px 10px 0;
+        font-family: roboto;
+  
+        input {
+          padding: 4px 8px;
+          border: 1px solid #ccc;
+          border-radius: 4px;
+          font-family: roboto;
+        }
+      }
+    }
+  }
+  

@@ -1,0 +1,16 @@
+<div class="opts container">
+    <label>
+      <span>Columns: </span>
+      <input #maxColsIn type="number" [value]="cols" (change)="updateCols(maxColsIn.value)">
+    </label>
+  
+    <label>
+      <span>Max card rows: </span>
+      <input #cardMaxRowsIn type="number" [value]="cardMaxRows" (change)="updateCardMaxRows(cardMaxRowsIn.value)">
+    </label>
+  </div>
+  
+  <div class="container">
+    <app-test-code-multisize-dashboard [cols]="cols" [cardMaxRows]="cardMaxRows" [cards]="cards" (orderChanged)="orderChanged($event)"></app-test-code-multisize-dashboard>
+  </div>
+  

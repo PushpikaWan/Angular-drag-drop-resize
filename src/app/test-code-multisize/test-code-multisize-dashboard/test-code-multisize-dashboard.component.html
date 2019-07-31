@@ -1,0 +1,13 @@
+<mat-grid-list cdkDropListGroup [cols]="cols | min:responsiveColumns" rowHeight="1:0.5" gutterSize="15px">
+	<mat-grid-tile *ngFor="let card of cards; let i = index;" [colspan]="card.cols | min:responsiveColumns:cols" [rowspan]="card.rows | min:cardMaxRows">
+		<cdk-drop-list [cdkDropListData]="i">
+			<!-- Cards -->
+			<mat-card cdkDrag (cdkDragEntered)="entered($event)" (cdkDragDropped)="dropped($event)" [cdkDragData]="i" class="dashboard-card" [style.backgroundColor]="card.color">
+				<mat-icon cdkDragHandle title="Drag">drag_handle</mat-icon>
+				<mat-card-content class="dashboard-card-content">
+					<h2>{{ card.title }}</h2>
+				</mat-card-content>
+			</mat-card>
+		</cdk-drop-list>
+	</mat-grid-tile>
+</mat-grid-list>

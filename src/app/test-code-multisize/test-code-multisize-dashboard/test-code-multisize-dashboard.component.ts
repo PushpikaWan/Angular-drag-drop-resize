@@ -59,15 +59,12 @@ export class TestCodeMultisizeDashboardComponent implements OnInit, OnDestroy {
   updateCols(index: number ,val: any): void {
     // this.cards[index].cols = this.toInt(val, this.cols) || this.cols;
     this.cards[index].cols = val;
-    console.log(this.cards);
-    console.log("val:",val);
     this.orderChanged.emit(this.cards);
   }
 
   updateRows(index: number ,val: any): void {
     // this.cards[index].rows = this.toInt(val, this.cardMaxRows) || this.cardMaxRows;
     this.cards[index].rows = val;
-    console.log(this.cards);
     this.orderChanged.emit(this.cards);
   }
 

@@ -1,5 +1,4 @@
 import { Component } from '@angular/core';
-import { getColor } from './color-utils';
 
 @Component({
   selector: 'app-test-code-multisize',
@@ -12,26 +11,25 @@ export class TestCodeMultisizeComponent {
   cardMaxRows: number = 2;
 
   cards: any[] = [
-    { title: 'Card 1', cols: 2, rows: 2, color: getColor()},
-    { title: 'Card 2', cols: 1, rows: 1, color: getColor() },
-    { title: 'Card 3', cols: 3, rows: 1, color: getColor() },
-    { title: 'Card 4', cols: 1, rows: 1, color: getColor() },
-    { title: 'Card 5', cols: 1, rows: 1, color: getColor() },
-    { title: 'Card 6', cols: 1, rows: 1, color: getColor() },
-    { title: 'Card 7', cols: 1, rows: 1, color: getColor() },
-    { title: 'Card 8', cols: 1, rows: 1, color: getColor() },
-    { title: 'Card 9', cols: 1, rows: 3, color: getColor() },
-    { title: 'Card 10', cols: 1, rows: 1, color: getColor() },
-    { title: 'Card 11', cols: 1, rows: 1, color: getColor() },
-    { title: 'Card 12', cols: 2, rows: 1, color: getColor() },
-    { title: 'Card 13', cols: 1, rows: 1, color: getColor() },
-    { title: 'Card 14', cols: 1, rows: 1, color: getColor() },
-    { title: 'Card 15', cols: 1, rows: 2, color: getColor() },
-    { title: 'Card 16', cols: 2, rows: 1, color: getColor() }
+    { title: 'Card 1', cols: 2, rows: 2},
+    { title: 'Card 2', cols: 1, rows: 1 },
+    { title: 'Card 3', cols: 3, rows: 1},
+    { title: 'Card 4', cols: 1, rows: 1},
+    { title: 'Card 5', cols: 1, rows: 1},
+    { title: 'Card 6', cols: 1, rows: 1},
+    { title: 'Card 7', cols: 1, rows: 1},
+    { title: 'Card 8', cols: 1, rows: 1},
+    { title: 'Card 9', cols: 1, rows: 3},
+    { title: 'Card 10', cols: 1, rows: 1},
+    { title: 'Card 11', cols: 1, rows: 1},
+    { title: 'Card 12', cols: 2, rows: 1},
+    { title: 'Card 13', cols: 1, rows: 1},
+    { title: 'Card 14', cols: 1, rows: 1},
+    { title: 'Card 15', cols: 1, rows: 2},
+    { title: 'Card 16', cols: 2, rows: 1}
    ];
 
    orderChanged(e: any): void {
-     console.log('Order changed: ', e);
    }
 
    updateCols(val: any): void {

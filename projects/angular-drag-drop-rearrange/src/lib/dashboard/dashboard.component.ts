@@ -36,7 +36,6 @@ export class DashboardComponent implements OnInit, OnDestroy {
     this.dashboardService.dashboardComponentListChanged.subscribe(
       (items: any[]) => {
         this.dashboardItems = items;
-        console.log("dashboard Items",items);
       }
     );
   }

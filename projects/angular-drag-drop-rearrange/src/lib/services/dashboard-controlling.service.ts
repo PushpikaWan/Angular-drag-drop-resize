@@ -2,14 +2,13 @@ import { Injectable } from '@angular/core';
 import { Subject } from 'rxjs';
 import { DashboardItem } from '../dashboard-item.model';
 import { Dashboard } from '../dashboard.model';
-import { Content } from '@angular/compiler/src/render3/r3_ast';
 
 @Injectable({
   providedIn: 'root'
 })
 
 //todo create save functionlity
-// todo create customizable width and height of dashboard
+// todo add common validation to number spinner
 //todo can only one place to drag and go to angular cdk options and apply that can be applied
 
 

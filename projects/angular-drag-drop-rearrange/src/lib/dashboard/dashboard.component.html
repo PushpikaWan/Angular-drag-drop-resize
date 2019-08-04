@@ -1,35 +1,40 @@
 <mat-grid-list cdkDropListGroup [cols]="cols | min:responsiveColumns" rowHeight="1:0.5" gutterSize="15px">
-    <mat-grid-tile *ngFor="let card of dashboardItems; let i = index;" [colspan]="card.columns | min:responsiveColumns:cols"
-      [rowspan]="card.rows | min:cardMaxRows">
-      <cdk-drop-list [cdkDropListData]="i">
-        <!-- Cards -->
-        <mat-card cdkDrag (cdkDragEntered)="entered($event)" (cdkDragDropped)="dropped($event)" [cdkDragData]="i"
-          class="dashboard-card">
-          <div class="operating-panel">
-            <svg class="mat-icon" cdkDragHandle title="Drag" width="24px" fill="currentColor" viewBox="0 0 24 24">
-              <path
-                d="M10 9h4V6h3l-5-5-5 5h3v3zm-1 1H6V7l-5 5 5 5v-3h3v-4zm14 2l-5-5v3h-3v4h3v3l5-5zm-9 3h-4v3H7l5 5 5-5h-3v-3z">
-              </path>
-              <path d="M0 0h24v24H0z" fill="none"></path>
-            </svg>
-            <label>
-              <span>Cols: </span>
-              <input class="number-spinner" #colsIn type="number" [value]="card.columns" (change)="updateCols(i,colsIn.value)">
-            </label>
-            <label>
-              <span>rows: </span>
-              <input class="number-spinner" #rowsIn type="number" [value]="card.rows" (change)="updateRows(i,rowsIn.value)">
-            </label>
-            <svg class="mat-icon" (click)="removeItem(item.id)" width="24px" fill="currentColor" viewBox="0 0 24 24">
-              <line x1="1" y1="11" x2="11" y2="1" stroke="black" stroke-width="2" />
-              <line x1="1" y1="1" x2="11" y2="11" stroke="black" stroke-width="2" />
-            </svg>
+  <mat-grid-tile *ngFor="let card of dashboardItems; let i = index;"
+    [colspan]="card.columns | min:responsiveColumns:cols" [rowspan]="card.rows | min:cardMaxRows">
+    <cdk-drop-list [cdkDropListData]="i">
+      <!-- Cards -->
+      <mat-card cdkDrag (cdkDragEntered)="entered($event)" (cdkDragDropped)="dropped($event)" [cdkDragData]="i"
+        class="dashboard-card">
+        <div class="operating-panel">
+          <svg class="mat-icon oprating-item" cdkDragHandle title="Drag" width="24px" fill="currentColor"
+            viewBox="0 0 24 24">
+            <path
+              d="M10 9h4V6h3l-5-5-5 5h3v3zm-1 1H6V7l-5 5 5 5v-3h3v-4zm14 2l-5-5v3h-3v4h3v3l5-5zm-9 3h-4v3H7l5 5 5-5h-3v-3z">
+            </path>
+            <path d="M0 0h24v24H0z" fill="none"></path>
+          </svg>
+          <label>
+            <span>Cols: </span>
+            <input class="number-spinner oprating-item" #colsIn type="number" [value]="card.columns"
+              (change)="updateCols(i,colsIn.value)">
+          </label>
+          <label>
+            <span>rows: </span>
+            <input class="number-spinner oprating-item" #rowsIn type="number" [value]="card.rows"
+              (change)="updateRows(i,rowsIn.value)">
+          </label>
+          <svg class="mat-icon oprating-item" (click)="removeItem(card.id)" width="24px" fill="currentColor"
+            viewBox="0 0 24 24">
+            <line x1="1" y1="11" x2="11" y2="1" stroke="black" stroke-width="2" />
+            <line x1="1" y1="1" x2="11" y2="11" stroke="black" stroke-width="2" />
+          </svg>
+        </div>
+        <mat-card-content class="dashboard-card-content">
+          <div class="card-item-content">
+            <h3>{{ card.content }}</h3>
           </div>
-          <mat-card-content class="dashboard-card-content">
-            <h2>{{ card.content }}</h2>
-          </mat-card-content>
-        </mat-card>
-      </cdk-drop-list>
-    </mat-grid-tile>
-  </mat-grid-list>
-  
+        </mat-card-content>
+      </mat-card>
+    </cdk-drop-list>
+  </mat-grid-tile>
+</mat-grid-list>

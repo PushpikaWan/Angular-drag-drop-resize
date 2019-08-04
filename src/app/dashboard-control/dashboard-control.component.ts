@@ -26,14 +26,14 @@ export class DashboardControlComponent implements OnInit {
     this.dashboards = [
       { counter: 3,
         dashboardItems: [
-          {id:1, content:"c1", columns:2, rows:3 }, 
-          {id:2, content:"c2", columns:1, rows:1 }, 
-          {id:3, content:"c3", columns:2, rows:2 }
+          {id:1, content:"card 1", columns:2, rows:3 }, 
+          {id:2, content:"card 2", columns:1, rows:1 }, 
+          {id:3, content:"card 3", columns:2, rows:2 }
         ]
       },
       {counter: 0,
       dashboardItems: [
-        {id:1, content:"c1", columns:2, rows:3 }
+        {id:1, content:"card 1", columns:2, rows:3 }
       ]
       }
     ];
@@ -53,7 +53,6 @@ export class DashboardControlComponent implements OnInit {
   }
 
   setTemplate() {
-    console.log("selected template",this.dashboards[this.selectedTemplate]);
     this.dashboardService.loadDashBoradItemsByList(this.dashboards[this.selectedTemplate]);
   }
 

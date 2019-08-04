@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { DashboardControllingService } from 'projects/angular-drag-drop-rearrange/src/lib/services/dashboard-controlling.service';
 import { Dashboard } from 'projects/angular-drag-drop-rearrange/src/lib/dashboard.model';
+import { Content } from '@angular/compiler/src/render3/r3_ast';
 
 @Component({
   selector: 'app-dashboard-control',
@@ -9,8 +10,8 @@ import { Dashboard } from 'projects/angular-drag-drop-rearrange/src/lib/dashboar
 })
 export class DashboardControlComponent implements OnInit {
 
-  availableColumns: number = 0;
-  selectedColumn: number = 0;
+  cols: number = 3;
+  cardMaxRows: number = 2;
 
   dashboards: Dashboard[];
   selectedTemplate: number = 0;
@@ -18,38 +19,22 @@ export class DashboardControlComponent implements OnInit {
   constructor(private dashboardService: DashboardControllingService) { }
 
   ngOnInit() {
-    this.dashboardService.dashboardComponentListChanged.subscribe(
-      (items: Object[]) => {
-        this.availableColumns = items.length;
-      }
-    );
     this.initialiseTemplates();
   }
 
   private initialiseTemplates() {
     this.dashboards = [
       { counter: 3,
-        dashboardItemLists: [
-          {id: '1',
-          dashboardItems: [
-              {
-                id: 1,
-                content: 'check 01'
-              },
-              {
-                id: 2,
-                content: 'check 02'
-              },
-              {
-                id: 3,
-                content: 'check 03'
-              }
-            ]
-          }
+        dashboardItems: [
+          {id:1, content:"c1", columns:2, rows:3 }, 
+          {id:2, content:"c2", columns:1, rows:1 }, 
+          {id:3, content:"c3", columns:2, rows:2 }
         ]
       },
       {counter: 0,
-      dashboardItemLists: []
+      dashboardItems: [
+        {id:1, content:"c1", columns:2, rows:3 }
+      ]
       }
     ];
   }
@@ -58,16 +43,9 @@ export class DashboardControlComponent implements OnInit {
     this.dashboardService.dashboardComponentListChanged.unsubscribe();
   }
 
-  addVerticalPanel() {
-    this.dashboardService.addVerticalItem(this.selectedColumn);
-  }
-
-  addHorizontalPanel() {
-    this.dashboardService.addHorizontalItem();
-  }
-
-  veritvalPanelChangeListener(event: any) {
-    this.selectedColumn = event.target.value;
+  addItem(cols: any, rows: any) {
+    // this.dashboardService.addItem(cols.toInt32(cols,1),rows.toInt32(rows,1));
+    this.dashboardService.addItem(+cols,+rows);
   }
 
   dashboardTemplateChangeListener(event: any) {
@@ -75,11 +53,8 @@ export class DashboardControlComponent implements OnInit {
   }
 
   setTemplate() {
+    console.log("selected template",this.dashboards[this.selectedTemplate]);
     this.dashboardService.loadDashBoradItemsByList(this.dashboards[this.selectedTemplate]);
-  }
-
-  removeEmptyCells() {
-    this.dashboardService.removeAllUnusedLists();
   }
 
   resetPanel() {
@@ -88,6 +63,23 @@ export class DashboardControlComponent implements OnInit {
 
   counter(i: number) {
     return new Array(i);
+  }
+
+  orderChanged(e: any): void {
+  }
+
+  updateCols(val: any): void {
+    this.cols = this.toInt(val, 3) || 3;
+  }
+
+  updateCardMaxRows(val: any): void {
+    this.cardMaxRows = this.toInt(val, 2) || 2;
+  }
+
+  private toInt(val: any, fallbackValue: number = 0): number {
+    const normalized = String(val).replace(/[\D]/g, '');
+    const v = Number(normalized);
+    return isNaN(v) ? fallbackValue : v;
   }
 
 }

@@ -1,7 +1,7 @@
 
 export class DashboardItem{
   id: number;
-  content: any;
-  isResizable?: boolean;
-  isDraggable?: boolean;
+  content?: any;
+  columns: number;
+  rows: number;
 }

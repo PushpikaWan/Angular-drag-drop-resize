@@ -1,4 +1,4 @@
-<div class="vertical_inline_item_container">
+<!-- <div class="vertical_inline_item_container">
     <button mat-raised-button color="primary" (click)="addHorizontalPanel()">add horizontal panel</button>
     <button mat-raised-button color="primary" (click)="removeEmptyCells()">remove empty cells</button>
     <button mat-raised-button color="primary" (click)="resetPanel()">reset</button>
@@ -14,4 +14,38 @@
       <option *ngFor='let in of counter(dashboards.length);let i = index' value="{{i}}">{{i}}</option>
     </select>
     <button mat-raised-button color="primary" (click)="setTemplate()">Load Template</button>
-</div>
+</div> -->
+
+<div class="opts container">
+    <label>
+      <span>Columns: </span>
+      <input #maxColsIn type="number" [value]="cols" (change)="updateCols(maxColsIn.value)">
+    </label>
+  
+    <label>
+      <span>Max card rows: </span>
+      <input #cardMaxRowsIn type="number" [value]="cardMaxRows" (change)="updateCardMaxRows(cardMaxRowsIn.value)">
+    </label>
+
+    <select (change)="dashboardTemplateChangeListener($event)">
+        <option *ngFor='let in of counter(dashboards.length);let i = index' value="{{i}}">{{i}}</option>
+      </select>
+      <button mat-raised-button color="primary" (click)="setTemplate()">Load Template</button>
+  </div>
+
+  <div class="opts container">
+    <label>
+      <span>Cols: </span>
+      <input #newItemCols type="number" [value]="1">
+    </label>
+  
+    <label>
+      <span>rows: </span>
+      <input #newItemRows type="number" [value]="1">
+    </label>
+    <button mat-raised-button color="primary" (click)="addItem(newItemCols.value, newItemRows.value)">add Item</button>
+  </div>
+  
+  <div class="container">
+    <app-dashboard  [cols]="cols" [cardMaxRows]="cardMaxRows" (orderChanged)="orderChanged($event)"></app-dashboard>
+  </div>

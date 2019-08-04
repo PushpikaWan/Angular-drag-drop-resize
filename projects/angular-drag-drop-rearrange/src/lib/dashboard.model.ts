@@ -1,6 +1,6 @@
-import { DashboardItemList } from './dashboard-item-list.model';
+import { DashboardItem } from './dashboard-item.model';
 
 export class Dashboard {
   counter: number;
-  dashboardItemLists: DashboardItemList[];
+  dashboardItems: DashboardItem[];
 }

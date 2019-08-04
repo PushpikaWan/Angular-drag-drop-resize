@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { Subject } from 'rxjs';
 import { DashboardItem } from '../dashboard-item.model';
-import { DashboardItemList } from '../dashboard-item-list.model';
 import { Dashboard } from '../dashboard.model';
+import { Content } from '@angular/compiler/src/render3/r3_ast';
 
 @Injectable({
   providedIn: 'root'
@@ -16,37 +16,35 @@ import { Dashboard } from '../dashboard.model';
 export class DashboardControllingService {
 
   counter = 0;
-  horizontalLists: DashboardItemList[] = [];
+  maxcolumns: number = 3;
+  maxRows: number = 2;
+  dashboardItems: DashboardItem[] = [];
 
   dashboardComponentListChanged = new Subject();
 
   constructor() {
   }
 
-  addVerticalItem(id: number) {
-    if (id > this.horizontalLists.length) {
-      return;
-    }
-    let element = this.horizontalLists[id];
-    element.dashboardItems.push({ id: this.counter, content: 'card_' + this.counter });
-    this.horizontalLists[id] = element;
-    this.updateAfterItemAdded();
-  }
-
-  addHorizontalItem() {
-    this.horizontalLists.push(
-      {
-        id: 'list_' + this.counter,
-        dashboardItems: [ { id: this.counter, content: 'card_' + this.counter }]
-      }
-    );
-    this.updateAfterItemAdded();
+  addItem(cols: number, rows: number) {
+    this.dashboardItems.push({ id: this.counter, content: "Card "+this.counter, columns: cols, rows: rows });
+    this.counter++;
+    this.updateItemList();
   }
 
   resetPanel() {
-    this.horizontalLists = [];
+    this.dashboardItems = [];
     this.counter = 0;
-    this.dashboardComponentListChanged.next(this.horizontalLists);
+    this.updateItemList();
+  }
+
+  changeMaxColumns(maxcolumns: number) {
+    this.maxcolumns = maxcolumns;
+    this.updateItemList();
+  }
+
+  changeMaxRows(maxRows: number) {
+    this.maxRows = maxRows;
+    this.updateItemList();
   }
 
   /**
@@ -54,37 +52,25 @@ export class DashboardControllingService {
    * @param id card list item id
    */
   removeItem(id: number) {
-    this.horizontalLists.forEach( (valueList) => {
-      valueList.dashboardItems.forEach( (element: DashboardItem, index: number) => {
+      this.dashboardItems.forEach((element: DashboardItem, index: number) => {
         if (id === element.id) {
-          valueList.dashboardItems.splice(index, 1);
+          this.dashboardItems.splice(index, 1);
         }
       });
-    });
   }
 
-  removeAllUnusedLists() {
-    this.horizontalLists = this.horizontalLists.filter((e) => {
-      return e.dashboardItems.length > 0;
-    });
-    this.dashboardComponentListChanged.next(this.horizontalLists);
+  private updateItemList() {
+    this.dashboardComponentListChanged.next(this.dashboardItems);
   }
 
-  private updateAfterItemAdded() {
-    this.counter++;
-    this.dashboardComponentListChanged.next(this.horizontalLists);
-    this.removeAllUnusedLists();
-  }
-
-   loadDashBoradItemsByList(dashboard: Dashboard)
-  {
-    this.horizontalLists = dashboard.dashboardItemLists;
-    this.dashboardComponentListChanged.next(this.horizontalLists);
+  loadDashBoradItemsByList(dashboard: Dashboard) {
+    this.dashboardItems = dashboard.dashboardItems;
+    this.updateItemList();
     this.counter = dashboard.counter;
   }
 
   getCurrentDashboardToSave(): Dashboard {
-    return {counter: this.counter, dashboardItemLists: this.horizontalLists};
+    return { counter: this.counter, dashboardItems: this.dashboardItems };
   }
 
 }

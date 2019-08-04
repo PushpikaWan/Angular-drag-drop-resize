@@ -9,11 +9,11 @@ import { untilDestroyed } from 'ngx-take-until-destroy';
 import { DashboardItem } from '../dashboard-item.model';
 
 @Component({
-  selector: 'app-dashboard',
-  templateUrl: './dashboard.component.html',
-  styleUrls: ['./dashboard.component.css']
+  selector: 'app-dashboard-customize',
+  templateUrl: './dashboard-customize.component.html',
+  styleUrls: ['./dashboard-customize.component.css']
 })
-export class DashboardComponent implements OnInit, OnDestroy {
+export class DashboardCustomizeComponent implements OnInit, OnDestroy {
 
   @Output() orderChanged: EventEmitter<any[]> = new EventEmitter();
   

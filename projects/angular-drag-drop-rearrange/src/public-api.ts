@@ -3,6 +3,6 @@
  */
 
 export * from './lib/services/dashboard-controlling.service';
-export * from './lib/dashboard/dashboard.component';
+export * from './lib/dashboard-customize/dashboard-customize.component';
 export * from './lib/dashboard.model';
 export * from './lib/angular-drag-drop-rearrange.module';

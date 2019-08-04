@@ -5,24 +5,24 @@
       <span>Max Columns: </span>
       <input #maxColsIn type="number" [value]="cols" (change)="updateCols(maxColsIn.value)">
     </label>
-  
+
     <label>
       <span>Max rows: </span>
       <input #cardMaxRowsIn type="number" [value]="cardMaxRows" (change)="updateCardMaxRows(cardMaxRowsIn.value)">
     </label>
-  
+
     <select (change)="dashboardTemplateChangeListener($event)">
       <option *ngFor='let in of counter(dashboards.length);let i = index' value="{{i}}">{{i}}</option>
     </select>
     <button mat-raised-button color="primary" (click)="setTemplate()">Load Template</button>
   </div>
-  
+
   <div class="opts container">
     <label>
       <span>Cols: </span>
       <input #newItemCols type="number" [value]="1">
     </label>
-  
+
     <label>
       <span>rows: </span>
       <input #newItemRows type="number" [value]="1">
@@ -36,16 +36,12 @@
 <button mat-raised-button color="primary" (click)="changeMode()">change Mode</button>
 </div>
 
-<div *ngIf="isCustomizeMode; else viewMode">
-  <div class="container">
+  <div  [hidden]="!isCustomizeMode" class="container">
     <app-dashboard-customize [cols]="cols" [cardMaxRows]="cardMaxRows" (orderChanged)="orderChanged($event)">
     </app-dashboard-customize>
   </div>
-</div>
 
-<ng-template #viewMode>
-  <div class="container">
+  <div [hidden]="isCustomizeMode" class="container">
     <app-dashboard-view [cols]="cols" [cardMaxRows]="cardMaxRows" [dashboardItems]="dashboardItems_for_view"
       (orderChanged)="orderChanged($event)"></app-dashboard-view>
   </div>
-</ng-template>

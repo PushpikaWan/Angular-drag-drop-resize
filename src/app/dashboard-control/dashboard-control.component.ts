@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { DashboardControllingService } from 'projects/angular-drag-drop-rearrange/src/lib/services/dashboard-controlling.service';
 import { Dashboard } from 'projects/angular-drag-drop-rearrange/src/lib/dashboard.model';
 import { Content } from '@angular/compiler/src/render3/r3_ast';
+import { DashboardItem } from 'projects/angular-drag-drop-rearrange/src/lib/dashboard-item.model';
 
 @Component({
   selector: 'app-dashboard-control',
@@ -15,6 +16,9 @@ export class DashboardControlComponent implements OnInit {
 
   dashboards: Dashboard[];
   selectedTemplate: number = 0;
+  //use this only for preview purposes
+  dashboardItems_for_view :DashboardItem[];
+  isCustomizeMode: boolean = true;
 
   constructor(private dashboardService: DashboardControllingService) { }
 
@@ -54,6 +58,11 @@ export class DashboardControlComponent implements OnInit {
 
   setTemplate() {
     this.dashboardService.loadDashBoradItemsByList(this.dashboards[this.selectedTemplate]);
+  }
+
+  changeMode(){
+    this.dashboardItems_for_view = this.dashboardService.getCurrentDashboardToSave().dashboardItems;
+    this.isCustomizeMode = !this.isCustomizeMode;
   }
 
   resetPanel() {

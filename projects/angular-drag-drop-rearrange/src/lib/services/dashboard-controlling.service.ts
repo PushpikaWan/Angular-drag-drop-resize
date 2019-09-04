@@ -7,16 +7,15 @@ import { Dashboard } from '../dashboard.model';
   providedIn: 'root'
 })
 
-//todo create save functionlity
+// todo create save functionlity
 // todo add common validation to number spinner
-//todo can only one place to drag and go to angular cdk options and apply that can be applied
-
+// todo can only one place to drag and go to angular cdk options and apply that can be applied
 
 export class DashboardControllingService {
 
   counter = 0;
-  maxcolumns: number = 3;
-  maxRows: number = 2;
+  maxColumns = 3;
+  maxRows = 2;
   dashboardItems: DashboardItem[] = [];
 
   dashboardComponentListChanged = new Subject();
@@ -25,7 +24,7 @@ export class DashboardControllingService {
   }
 
   addItem(cols: number, rows: number) {
-    this.dashboardItems.push({ id: this.counter, content: "Card "+this.counter, columns: cols, rows: rows });
+    this.dashboardItems.push({ id: this.counter, content: 'Card ' + this.counter, columns: cols, rows });
     this.counter++;
     this.updateItemList();
   }
@@ -37,7 +36,7 @@ export class DashboardControllingService {
   }
 
   changeMaxColumns(maxcolumns: number) {
-    this.maxcolumns = maxcolumns;
+    this.maxColumns = maxcolumns;
     this.updateItemList();
   }
 

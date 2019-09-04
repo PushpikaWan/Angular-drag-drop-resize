@@ -16,9 +16,8 @@ import { DashboardItem } from '../dashboard-item.model';
 export class DashboardCustomizeComponent implements OnInit, OnDestroy {
 
   @Output() orderChanged: EventEmitter<any[]> = new EventEmitter();
-  
-  @Input() cols: number = 3;
-  @Input() cardMaxRows: number = 2;
+  @Input() cols = 3;
+  @Input() cardMaxRows = 2;
 
   dashboardItems: DashboardItem[] = [];
   responsiveColumns: number;
@@ -67,13 +66,13 @@ export class DashboardCustomizeComponent implements OnInit, OnDestroy {
       });
   }
 
-  updateCols(index: number ,val: any): void {
+  updateCols(index: number , val: any): void {
     // this.cards[index].cols = this.toInt(val, this.cols) || this.cols;
     this.dashboardItems[index].columns = val;
     this.orderChanged.emit(this.dashboardItems);
   }
 
-  updateRows(index: number ,val: any): void {
+  updateRows(index: number , val: any): void {
     // this.cards[index].rows = this.toInt(val, this.cardMaxRows) || this.cardMaxRows;
     this.dashboardItems[index].rows = val;
     this.orderChanged.emit(this.dashboardItems);

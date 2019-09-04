@@ -1,12 +1,12 @@
-import { Component, OnInit, OnDestroy, ChangeDetectorRef, Input, Output, EventEmitter } from '@angular/core';
+import {Component, OnInit, OnDestroy, ChangeDetectorRef, Input, Output, EventEmitter} from '@angular/core';
 
-import { Breakpoints, BreakpointObserver, BreakpointState } from '@angular/cdk/layout';
-import { CdkDragDrop, moveItemInArray, transferArrayItem, CdkDragEnter } from '@angular/cdk/drag-drop';
-import { map } from 'rxjs/operators';
+import {Breakpoints, BreakpointObserver, BreakpointState} from '@angular/cdk/layout';
+import {CdkDragDrop, moveItemInArray, transferArrayItem, CdkDragEnter} from '@angular/cdk/drag-drop';
+import {map} from 'rxjs/operators';
 
-import { DashboardControllingService } from '../services/dashboard-controlling.service';
-import { untilDestroyed } from 'ngx-take-until-destroy';
-import { DashboardItem } from '../dashboard-item.model';
+import {DashboardControllingService} from '../services/dashboard-controlling.service';
+import {untilDestroyed} from 'ngx-take-until-destroy';
+import {DashboardItem} from '../dashboard-item.model';
 
 @Component({
   selector: 'app-dashboard-customize',
@@ -26,7 +26,8 @@ export class DashboardCustomizeComponent implements OnInit, OnDestroy {
     private changeDetector: ChangeDetectorRef,
     private breakpointObserver: BreakpointObserver,
     private dashboardService: DashboardControllingService
-  ) {}
+  ) {
+  }
 
   ngOnInit(): void {
     /* Responsive breakpoints */
@@ -66,13 +67,13 @@ export class DashboardCustomizeComponent implements OnInit, OnDestroy {
       });
   }
 
-  updateCols(index: number , val: any): void {
+  updateCols(index: number, val: any): void {
     // this.cards[index].cols = this.toInt(val, this.cols) || this.cols;
     this.dashboardItems[index].columns = val;
     this.orderChanged.emit(this.dashboardItems);
   }
 
-  updateRows(index: number , val: any): void {
+  updateRows(index: number, val: any): void {
     // this.cards[index].rows = this.toInt(val, this.cardMaxRows) || this.cardMaxRows;
     this.dashboardItems[index].rows = val;
     this.orderChanged.emit(this.dashboardItems);

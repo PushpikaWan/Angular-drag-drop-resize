@@ -10,7 +10,7 @@ import { DashboardViewComponent } from './dashboard-view/dashboard-view.componen
 
 
 @NgModule({
-  declarations: [DashboardCustomizeComponent, DashboardViewComponent,MinPipe],
+  declarations: [DashboardCustomizeComponent, DashboardViewComponent, MinPipe],
   imports: [
     CommonModule,
     MatIconModule,
@@ -20,6 +20,6 @@ import { DashboardViewComponent } from './dashboard-view/dashboard-view.componen
     MatGridListModule,
     LayoutModule
   ],
-  exports: [DashboardCustomizeComponent, DashboardViewComponent,MinPipe]
+  exports: [DashboardCustomizeComponent, DashboardViewComponent, MinPipe]
 })
 export class AngularDragDropRearrangeModule { }

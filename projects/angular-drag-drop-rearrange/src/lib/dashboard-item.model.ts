@@ -1,5 +1,4 @@
-
-export class DashboardItem{
+export class DashboardItem {
   id: number;
   content?: any;
   columns: number;

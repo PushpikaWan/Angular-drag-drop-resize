@@ -1,6 +1,6 @@
-import { Pipe, PipeTransform } from '@angular/core';
+import {Pipe, PipeTransform} from '@angular/core';
 
-@Pipe({ name: 'min' })
+@Pipe({name: 'min'})
 export class MinPipe implements PipeTransform {
   public transform(value: any, ...args: any[]): number {
     // Take 'value' as fallback for undefined & 0

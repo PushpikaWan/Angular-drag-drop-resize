@@ -5,6 +5,11 @@
   margin: 10px;
 }
 
+.check{
+  width: 500px;
+  height: 500px;
+}
+
 :host .dashboard-card {
   position: absolute;
   top: 0;

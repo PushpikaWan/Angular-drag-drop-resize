@@ -5,12 +5,9 @@ import { MatButtonModule, MatIconModule, MatCardModule, MatGridListModule } from
 import { LayoutModule } from '@angular/cdk/layout';
 import { MinPipe } from './dashboard-customize/min.pipe';
 import { DashboardCustomizeComponent } from './dashboard-customize/dashboard-customize.component';
-import { DashboardViewComponent } from './dashboard-view/dashboard-view.component';
-
-
 
 @NgModule({
-  declarations: [DashboardCustomizeComponent, DashboardViewComponent, MinPipe],
+  declarations: [DashboardCustomizeComponent, MinPipe],
   imports: [
     CommonModule,
     MatIconModule,
@@ -20,6 +17,6 @@ import { DashboardViewComponent } from './dashboard-view/dashboard-view.componen
     MatGridListModule,
     LayoutModule
   ],
-  exports: [DashboardCustomizeComponent, DashboardViewComponent, MinPipe]
+  exports: [DashboardCustomizeComponent, MinPipe]
 })
 export class AngularDragDropRearrangeModule { }

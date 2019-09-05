@@ -1,24 +1,19 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { DashboardControllingService } from 'projects/angular-drag-drop-rearrange/src/lib/services/dashboard-controlling.service';
 import { Dashboard } from 'projects/angular-drag-drop-rearrange/src/lib/dashboard.model';
-import { Content } from '@angular/compiler/src/render3/r3_ast';
-import { DashboardItem } from 'projects/angular-drag-drop-rearrange/src/lib/dashboard-item.model';
 
 @Component({
   selector: 'app-dashboard-control',
   templateUrl: './dashboard-control.component.html',
   styleUrls: ['./dashboard-control.component.css']
 })
-export class DashboardControlComponent implements OnInit {
+export class DashboardControlComponent implements OnInit, OnDestroy {
 
-  cols: number = 3;
-  cardMaxRows: number = 2;
+  cols = 3;
+  cardMaxRows = 2;
 
   dashboards: Dashboard[];
-  selectedTemplate: number = 0;
-  //use this only for preview purposes
-  dashboardItems_for_view :DashboardItem[];
-  isCustomizeMode: boolean = true;
+  selectedTemplate = 0;
 
   constructor(private dashboardService: DashboardControllingService) { }
 
@@ -28,17 +23,19 @@ export class DashboardControlComponent implements OnInit {
 
   private initialiseTemplates() {
     this.dashboards = [
-      { counter: 3,
+      {
+        counter: 3,
         dashboardItems: [
-          {id:1, content:"card 1", columns:2, rows:3 }, 
-          {id:2, content:"card 2", columns:1, rows:1 }, 
-          {id:3, content:"card 3", columns:2, rows:2 }
+          { id: 1, content: 'card 1', columns: 2, rows: 3 },
+          { id: 2, content: 'card 2', columns: 1, rows: 1 },
+          { id: 3, content: 'card 3', columns: 2, rows: 2 }
         ]
       },
-      {counter: 0,
-      dashboardItems: [
-        {id:1, content:"card 1", columns:2, rows:3 }
-      ]
+      {
+        counter: 0,
+        dashboardItems: [
+          { id: 1, content: 'card 1', columns: 2, rows: 3 }
+        ]
       }
     ];
   }
@@ -49,7 +46,7 @@ export class DashboardControlComponent implements OnInit {
 
   addItem(cols: any, rows: any) {
     // this.dashboardService.addItem(cols.toInt32(cols,1),rows.toInt32(rows,1));
-    this.dashboardService.addItem(+cols,+rows);
+    this.dashboardService.addItem(+cols, +rows);
   }
 
   dashboardTemplateChangeListener(event: any) {
@@ -58,11 +55,6 @@ export class DashboardControlComponent implements OnInit {
 
   setTemplate() {
     this.dashboardService.loadDashBoradItemsByList(this.dashboards[this.selectedTemplate]);
-  }
-
-  changeMode(){
-    this.dashboardItems_for_view = this.dashboardService.getCurrentDashboardToSave().dashboardItems;
-    this.isCustomizeMode = !this.isCustomizeMode;
   }
 
   resetPanel() {

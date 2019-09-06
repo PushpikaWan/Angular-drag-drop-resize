@@ -13,7 +13,7 @@
     <select (change)="dashboardTemplateChangeListener($event)">
       <option *ngFor='let in of counter(dashboards.length);let i = index' value="{{i}}">{{i}}</option>
     </select>
-    <button mat-raised-button color="primary" (click)="setTemplate()">Load Template</button>
+    <button color="primary" (click)="setTemplate()">Load Template</button>
   </div>
 
   <div class="opts container">
@@ -26,11 +26,13 @@
       <span>rows: </span>
       <input #newItemRows type="number" [value]="1">
     </label>
-    <button mat-raised-button color="primary" (click)="addItem(newItemCols.value, newItemRows.value)">add Item</button>
-    <button mat-raised-button color="primary" (click)="resetPanel()">reset</button>
+    <button color="primary" (click)="addItem(newItemCols.value, newItemRows.value)">add Item</button>
+    <button color="primary" (click)="resetPanel()">reset</button>
   </div>
 
   <div class="container">
-    <app-dashboard-customize [cols]="cols" [cardMaxRows]="cardMaxRows" (orderChanged)="orderChanged($event)">
-    </app-dashboard-customize>
+<!--    <app-dashboard-customize [cols]="cols" [cardMaxRows]="cardMaxRows" (orderChanged)="orderChanged($event)">-->
+<!--    </app-dashboard-customize>-->
+     <app-dashboard-view>
+    </app-dashboard-view>
   </div>

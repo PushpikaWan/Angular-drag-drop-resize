@@ -22,7 +22,14 @@ export class AppComponent {
 
   updateCols(index: number, newColumnValue: any) {
     console.log(this.items[index], newColumnValue);
-    this.items[index].xEnd = this.items[index].xStart + this.toInt(newColumnValue);
+    let xEndOld =  this.items[index].xEnd ;
+    let xEndNew =  this.items[index].xStart + this.toInt(newColumnValue);
+    this.moveConflictingColumns(xEndOld, xEndNew);
+    this.items[index].xEnd = xEndNew;
+  }
+
+  private moveConflictingColumns(xEndOld: number, xEndNew: number) {
+
   }
 
   private toInt(val: any, fallbackValue: number = 0): number {

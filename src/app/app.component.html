@@ -1,13 +1,10 @@
 <div class="grid">
   <div class="item" *ngFor="let item of items; let i = index"
        [style.grid-column-start]="item.xStart" [style.grid-column-end]="item.xEnd"
-       [style.grid-row-start]="item.yStart" [style.grid-row-end]="item.yEnd" tabindex="1" draggable="true"
-       (dragstart)="handleDragStart($event)"
-       (dragover)="handleDragOver($event)"
-       (dragenter)="handleDragEnter($event)"
-       (dragleave)="handleDragLeave($event)"
-       (drop)="handleDrop($event)"
-       (dragend)="handleDragEnd($event)">
+       [style.grid-row-start]="item.yStart" [style.grid-row-end]="item.yEnd" tabindex="1"
+       (dragover)="allowDrop($event)"
+       (drop)="drop($event)"
+       draggable="true" (dragstart)="drag($event)" id="{{item.id}}">
     <div class="box">
       {{item.id}}<br/>
         Cols:

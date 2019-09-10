@@ -13,6 +13,7 @@ export class AppComponent {
   title = 'angular-drag-drop-resize';
   items: DashboardItem[];
   dragSrcEl = null;
+  private innerHTML: string;
 
   constructor(private dashboardControllingService: DashboardControllingService, private renderer: Renderer2) {
     this.items = [
@@ -75,7 +76,7 @@ export class AppComponent {
     this.dragSrcEl = this;
 
     event.dataTransfer.effectAllowed = 'move';
-    // event.dataTransfer.setData('text/html', this.innerHTML);
+    event.dataTransfer.setData('text', this.innerHTML);
   }
 
   handleDragEnd(event) {
@@ -114,12 +115,29 @@ export class AppComponent {
     // Don't do anything if dropping the same column we're dragging.
     if (this.dragSrcEl !== this) {
       // Set the source column's HTML to the HTML of the column we dropped on.
-      // this.dragSrcEl.innerHTML = this.innerHTML;
-      // this.innerHTML = e.dataTransfer.getData('text/html');
+      this.dragSrcEl.innerHTML = this.innerHTML;
+      this.innerHTML = e.dataTransfer.getData('text');
       console.log('drop into');
     }
 
     return false;
+  }
+
+  drop(ev) {
+    ev.preventDefault();
+    let data = ev.dataTransfer.getData("text");
+    console.log('data',data);
+    console.log('id',document.getElementById(data));
+    ev.target.appendChild(document.getElementById(data));
+    // ev.target.replaceChild(document.getElementById(data));
+  }
+
+  allowDrop(ev) {
+    ev.preventDefault();
+  }
+
+  drag(ev) {
+    ev.dataTransfer.setData("text", ev.target.id);
   }
 
 

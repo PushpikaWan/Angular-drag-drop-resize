@@ -38,3 +38,7 @@
 .grid .item:nth-child(8) { background-image: linear-gradient(45deg, #bceff3 0%, #adada3 60%); }
 .grid .item:nth-child(9) { background-image: linear-gradient(45deg, #cbabfb 0%, #123dae 60%); }
 .grid .item:nth-child(10) { background-image: linear-gradient(45deg, #13fdad 0%, #fb1212 60%); }
+
+.number-spinner{
+  width: 30px;
+}

@@ -22,37 +22,51 @@ export class AppComponent {
   }
 
   updateCols(index: number, newColumnValue: any) {
-    console.log(this.items[index], newColumnValue);
-    let xEndOld =  this.items[index].xEnd ;
-    let xEndNew =  this.items[index].xStart + this.toInt(newColumnValue);
-    this.moveConflictingColumns(xEndOld, xEndNew, this.items[index]);
-    //todo index use may introduce error use id instead of
-    this.items[index].xEnd = xEndNew;
+    //todo index use may introduce error, use id instead of
+    this.items[index].xEnd = this.items[index].xStart + this.toInt(newColumnValue);
+    this.moveConflictingColumns(this.items[index]);
+  }
+
+  updateRows(index: number, newRowValue: any) {
+    //todo index use may introduce error, use id instead of
+    this.items[index].yEnd = this.items[index].yStart + this.toInt(newRowValue);
+    this.moveConflictingRows(this.items[index]);
   }
 
   /**
-   * todo - simplify this logic
-   * This function is used to arrange other conflicting blocks when resizing elements
-   * @param xEndOld
-   * @param xEndNew
-   * @param resizingItem
+   * This function is used to arrange other conflicting blocks when resizing columns of elements
+   * @param resizingItem - item that changed positions
    */
-  private moveConflictingColumns(xEndOld: number, xEndNew: number, resizingItem: DashboardItem) {
+  private moveConflictingColumns(resizingItem: DashboardItem) {
     this.items
-      .filter(val => !(val.xStart < resizingItem.xEnd || val.yEnd <= resizingItem.yStart || val.yStart >= resizingItem.yEnd))
-      .sort((n1,n2) => n1.xStart - n2.xStart)
-      .forEach((val,index) => {
-        if(xEndNew > val.xStart){
-           let diff = xEndNew - val.xStart;
-           val.xStart += diff;
-           val.xEnd += diff;
-           //recursion
-           return this.moveConflictingColumns(val.xEnd - diff, val.xEnd,val);
-        }
-        else{
-          return;
-        }
-      })
+      .filter(item => this.isConflictingItem(resizingItem, item))
+      .forEach((val) => {
+        const diff = resizingItem.xEnd - val.xStart;
+        val.xStart += diff;
+        val.xEnd += diff;
+        // recursion
+        return this.moveConflictingColumns(val);
+      });
+  }
+
+  /**
+   * This function is used to arrange other conflicting blocks when resizing rows of elements
+   * @param resizingItem - item that changed positions
+   */
+  private moveConflictingRows(resizingItem: DashboardItem) {
+    this.items
+      .filter(item => this.isConflictingItem(resizingItem, item))
+      .forEach((val) => {
+        const diff = resizingItem.yEnd - val.yStart;
+        val.yStart += diff;
+        val.yEnd += diff;
+        // recursion
+        return this.moveConflictingColumns(val);
+      });
+  }
+
+  private isConflictingItem(resizingItem: DashboardItem, item: DashboardItem): boolean {
+    return item.xStart < resizingItem.xEnd && item.xEnd > resizingItem.xStart && item.yStart < resizingItem.yEnd && item.yEnd > resizingItem.yStart && item.id !== resizingItem.id;
   }
 
 

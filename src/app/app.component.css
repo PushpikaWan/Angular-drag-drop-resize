@@ -1,14 +1,16 @@
 .grid {
   display: grid;
   grid-gap: 1.5vw;
-  height: 100vh;
-  width: 100vw;
+  height: 100%;
+  width: 100%;
   padding: 1.5vw;
 }
 
 .grid {
   grid-template-columns: repeat(6, 1fr);
   grid-template-rows: auto;
+  border-color: #123dae;
+  background-color: #adada3;
   /*grid-template-areas:*/
   /*  "small1 hero   hero hero hero   med1"*/
   /*  "small2 hero   hero hero hero   med2"*/
@@ -27,6 +29,9 @@
   /*resize: both;*/
   /*overflow: auto;*/
 }
+.grid .item:hover{
+  cursor: move;
+}
 
 .grid .item:nth-child(1)  {background-image: linear-gradient(45deg, #cbabfb 0%, #fb7ef6 60%);}
 .grid .item:nth-child(2)  { background-image: linear-gradient(45deg, #fb7ef6 0%, #cbabfb 60%); }
@@ -41,4 +46,12 @@
 
 .number-spinner{
   width: 30px;
+}
+
+#boxheader {
+  padding: 10px;
+  cursor: move;
+  z-index: 10;
+  background-color: #2196F3;
+  color: #fff;
 }

@@ -82,43 +82,41 @@ export class AppComponent {
     }
     ev.preventDefault();
     const data = ev.dataTransfer.getData('text');
-    // console.log('data', data);
-    // console.log('id', document.getElementById(data));
-
-    if (this.overTarget !== null && this.dragSrcEl.id !== null) {
-      console.log('drop in to', this.overTarget.id, this.dragSrcEl.id);
-
-      const dragSrcElement: DashboardItem = this.items.get(this.toInt(this.dragSrcEl.id));
-      dragSrcElement.xStart = this.items.get(this.toInt(this.overTarget.id)).xStart;
-      dragSrcElement.xEnd =  this.items.get(this.toInt(this.overTarget.id)).xEnd;
-      this.items.set(this.toInt(this.dragSrcEl.id), dragSrcElement);
-      this.moveConflictingColumns(dragSrcElement);
-    }
-    ev.target.appendChild(document.getElementById(data));
   }
 
   handleDragOver(ev) {
     ev.preventDefault();
     const data = ev.dataTransfer.getData('text');
     ev.dataTransfer.dropEffect = 'move';
-    // ev.target.appendChild(document.getElementById(data));
   }
 
   handleDragEnter(ev) {
     ev.preventDefault();
     this.overTarget = ev.target;
-    // console.log('drag enter to', this.overTarget);
-    // this.renderer.setStyle(ev.target, 'opacity', '0.4');
+    if (this.overTarget && this.dragSrcEl && this.items.get(this.toInt(this.overTarget.id)) !== undefined && this.items.get(this.toInt(this.overTarget.id)) !== undefined) {
+      console.log('drop in ', this.items.get(this.dragSrcEl.id), 'to', this.items.get(this.overTarget.id));
+      const dragSrcElement: DashboardItem = this.items.get(this.toInt(this.dragSrcEl.id));
+
+      const colDiff = dragSrcElement.xEnd - dragSrcElement.xStart;
+      const rowDiff = dragSrcElement.yEnd - dragSrcElement.yStart;
+      dragSrcElement.xStart = this.items.get(this.toInt(this.overTarget.id)).xStart;
+      dragSrcElement.xEnd =  this.items.get(this.toInt(this.overTarget.id)).xStart + colDiff;
+      dragSrcElement.yStart = this.items.get(this.toInt(this.overTarget.id)).yStart;
+      dragSrcElement.yEnd =  this.items.get(this.toInt(this.overTarget.id)).yStart + rowDiff;
+
+      this.items.set(this.toInt(this.dragSrcEl.id), dragSrcElement);
+      console.log('swapping element', dragSrcElement);
+      this.moveConflictingColumns(dragSrcElement);
+      this.moveConflictingRows(dragSrcElement);
+    }
   }
 
   handleDragLeave(ev) {
     ev.preventDefault();
-    // console.log('drag leave from', this.overTarget);
     this.overTarget = null;
   }
 
   handleDragStart(event) {
-    // console.log('drag start');
     this.renderer.setStyle(event.target, 'opacity', '0.4');
     this.dragSrcEl = event.target;
 
@@ -127,7 +125,6 @@ export class AppComponent {
   }
 
   handleDragEnd(event) {
-    // console.log('drag stop');
     this.renderer.setStyle(event.target, 'opacity', '1.0');
   }
 

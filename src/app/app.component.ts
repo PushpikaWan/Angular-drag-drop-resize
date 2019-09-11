@@ -1,5 +1,6 @@
 import { Component, Renderer2 } from '@angular/core';
 import { DashboardControllingService } from './dashboard-controlling.service';
+import { Target } from '@angular/compiler';
 
 @Component({
   selector: 'app-root',
@@ -11,31 +12,32 @@ import { DashboardControllingService } from './dashboard-controlling.service';
 
 export class AppComponent {
   title = 'angular-drag-drop-resize';
-  items: DashboardItem[];
-  dragSrcEl = null;
+  items: Map<number, DashboardItem> = new Map();
+  private dragSrcEl: Target = null;
   private innerHTML: string;
+  private overTarget: Target = null;
 
   constructor(private dashboardControllingService: DashboardControllingService, private renderer: Renderer2) {
-    this.items = [
-      {id: 1, xStart: 1, xEnd: 2, yStart: 1, yEnd: 2},
-      {id: 2, xStart: 2, xEnd: 4, yStart: 1, yEnd: 3},
-      {id: 3, xStart: 4, xEnd: 5, yStart: 1, yEnd: 2},
-      {id: 4, xStart: 1, xEnd: 2, yStart: 2, yEnd: 5},
-      {id: 5, xStart: 2, xEnd: 3, yStart: 3, yEnd: 5},
-      {id: 6, xStart: 3, xEnd: 4, yStart: 3, yEnd: 5}
-    ];
+    this.items.set(1, {id: 1, xStart: 1, xEnd: 2, yStart: 1, yEnd: 2});
+    this.items.set(2, {id: 2, xStart: 2, xEnd: 4, yStart: 1, yEnd: 3});
+    this.items.set(3, {id: 3, xStart: 4, xEnd: 5, yStart: 1, yEnd: 2});
+    this.items.set(4, {id: 4, xStart: 1, xEnd: 2, yStart: 2, yEnd: 5});
+    this.items.set(5, {id: 5, xStart: 2, xEnd: 3, yStart: 3, yEnd: 5});
+    this.items.set(6, {id: 6, xStart: 3, xEnd: 4, yStart: 3, yEnd: 5});
   }
 
   updateCols(index: number, newColumnValue: any) {
-    // todo index use may introduce error, use id instead of
-    this.items[index].xEnd = this.items[index].xStart + this.toInt(newColumnValue);
-    this.moveConflictingColumns(this.items[index]);
+    const resizingElement: DashboardItem = this.items.get(index);
+    resizingElement.xEnd = this.items.get(index).xStart + this.toInt(newColumnValue);
+    this.items.set(index, resizingElement);
+    this.moveConflictingColumns(this.items.get(index));
   }
 
   updateRows(index: number, newRowValue: any) {
-    // todo index use may introduce error, use id instead of
-    this.items[index].yEnd = this.items[index].yStart + this.toInt(newRowValue);
-    this.moveConflictingRows(this.items[index]);
+    const resizingElement: DashboardItem = this.items.get(index);
+    resizingElement.yEnd = this.items.get(index).yStart + this.toInt(newRowValue);
+    this.items.set(index, resizingElement);
+    this.moveConflictingRows(this.items.get(index));
   }
 
   /**
@@ -43,14 +45,16 @@ export class AppComponent {
    * @param resizingItem - item that changed positions
    */
   private moveConflictingColumns(resizingItem: DashboardItem) {
-    this.items
+    Array.from(this.items.values())
       .filter(item => this.isConflictingItem(resizingItem, item))
       .forEach((val) => {
         const diff = resizingItem.xEnd - val.xStart;
-        val.xStart += diff;
-        val.xEnd += diff;
+        const changingItem: DashboardItem = this.items.get(val.id);
+        changingItem.xStart += diff;
+        changingItem.xEnd += diff;
+        this.items.set(val.id, changingItem);
         // recursion
-        return this.moveConflictingColumns(val);
+        return this.moveConflictingColumns(changingItem);
       });
   }
 
@@ -59,88 +63,73 @@ export class AppComponent {
    * @param resizingItem - item that changed positions
    */
   private moveConflictingRows(resizingItem: DashboardItem) {
-    this.items
+    Array.from(this.items.values())
       .filter(item => this.isConflictingItem(resizingItem, item))
       .forEach((val) => {
         const diff = resizingItem.yEnd - val.yStart;
-        val.yStart += diff;
-        val.yEnd += diff;
+        const changingItem: DashboardItem = this.items.get(val.id);
+        changingItem.yStart += diff;
+        changingItem.yEnd += diff;
+        this.items.set(val.id, changingItem);
         // recursion
-        return this.moveConflictingRows(val);
+        return this.moveConflictingRows(changingItem);
       });
   }
 
+  handleDrop(ev) {
+    if (ev.stopPropagation) {
+      ev.stopPropagation(); // Stops some browsers from redirecting.
+    }
+    ev.preventDefault();
+    const data = ev.dataTransfer.getData('text');
+    // console.log('data', data);
+    // console.log('id', document.getElementById(data));
+
+    if (this.overTarget !== null && this.dragSrcEl.id !== null) {
+      console.log('drop in to', this.overTarget.id, this.dragSrcEl.id);
+
+      const dragSrcElement: DashboardItem = this.items.get(this.toInt(this.dragSrcEl.id));
+      dragSrcElement.xStart = this.items.get(this.toInt(this.overTarget.id)).xStart;
+      dragSrcElement.xEnd =  this.items.get(this.toInt(this.overTarget.id)).xEnd;
+      this.items.set(this.toInt(this.dragSrcEl.id), dragSrcElement);
+      this.moveConflictingColumns(dragSrcElement);
+    }
+    ev.target.appendChild(document.getElementById(data));
+  }
+
+  handleDragOver(ev) {
+    ev.preventDefault();
+    const data = ev.dataTransfer.getData('text');
+    ev.dataTransfer.dropEffect = 'move';
+    // ev.target.appendChild(document.getElementById(data));
+  }
+
+  handleDragEnter(ev) {
+    ev.preventDefault();
+    this.overTarget = ev.target;
+    // console.log('drag enter to', this.overTarget);
+    // this.renderer.setStyle(ev.target, 'opacity', '0.4');
+  }
+
+  handleDragLeave(ev) {
+    ev.preventDefault();
+    // console.log('drag leave from', this.overTarget);
+    this.overTarget = null;
+  }
+
   handleDragStart(event) {
-    console.log('drag start');
+    // console.log('drag start');
     this.renderer.setStyle(event.target, 'opacity', '0.4');
-    this.dragSrcEl = this;
+    this.dragSrcEl = event.target;
 
     event.dataTransfer.effectAllowed = 'move';
-    event.dataTransfer.setData('text', this.innerHTML);
+    event.dataTransfer.setData('text', event.target.id);
   }
 
   handleDragEnd(event) {
-    console.log('drag stop');
+    // console.log('drag stop');
     this.renderer.setStyle(event.target, 'opacity', '1.0');
   }
-
-  handleDragOver(event) {
-    if (event.preventDefault) {
-      console.log('drag over', event);
-      event.preventDefault(); // Necessary. Allows us to drop.
-    }
-    event.dataTransfer.dropEffect = 'move';  // See the section on the DataTransfer object.
-    return false;
-  }
-
-  handleDragEnter(event) {
-    console.log('drag enter');
-    // this / e.target is the current hover target.
-    // this.classList.add('over');
-  }
-
-  handleDragLeave(event) {
-    console.log('drag leave');
-   // this / e.target is previous target element.
-    // this.classList.remove('over');
-  }
-
-  handleDrop(e) {
-    // this/e.target is current target element.
-
-    if (e.stopPropagation) {
-      e.stopPropagation(); // Stops some browsers from redirecting.
-    }
-
-    // Don't do anything if dropping the same column we're dragging.
-    if (this.dragSrcEl !== this) {
-      // Set the source column's HTML to the HTML of the column we dropped on.
-      this.dragSrcEl.innerHTML = this.innerHTML;
-      this.innerHTML = e.dataTransfer.getData('text');
-      console.log('drop into');
-    }
-
-    return false;
-  }
-
-  drop(ev) {
-    ev.preventDefault();
-    let data = ev.dataTransfer.getData("text");
-    console.log('data',data);
-    console.log('id',document.getElementById(data));
-    ev.target.appendChild(document.getElementById(data));
-    // document.getElementById(data).remove();
-    // ev.target.replaceChild(document.getElementById(data));
-  }
-
-  allowDrop(ev) {
-    ev.preventDefault();
-  }
-
-  drag(ev) {
-    ev.dataTransfer.setData("text", ev.target.id);
-  }
-
 
   private isConflictingItem(resizingItem: DashboardItem, item: DashboardItem): boolean {
     return item.xStart < resizingItem.xEnd && item.xEnd > resizingItem.xStart && item.yStart < resizingItem.yEnd && item.yEnd > resizingItem.yStart && item.id !== resizingItem.id;

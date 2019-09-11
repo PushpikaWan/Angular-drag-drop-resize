@@ -31,3 +31,15 @@ To get more help on the Angular CLI use `ng help` or go check out the [Angular C
 https://medium.com/@zamamohammed/announcing-angular-loadable-ngx-loadable-2-2kb-4ef7e6321784
 
 https://mohammedzamakhan.github.io/ngx-loadable/
+
+## Samples We can use
+
+http://gridifier.io/
+
+https://github.com/STRML/react-grid-layout
+
+https://grid.layoutit.com
+
+https://haltu.github.io/muuri/
+
+https://clippings.github.io/layout-grid/

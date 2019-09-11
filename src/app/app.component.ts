@@ -129,6 +129,7 @@ export class AppComponent {
     console.log('data',data);
     console.log('id',document.getElementById(data));
     ev.target.appendChild(document.getElementById(data));
+    // document.getElementById(data).remove();
     // ev.target.replaceChild(document.getElementById(data));
   }
 

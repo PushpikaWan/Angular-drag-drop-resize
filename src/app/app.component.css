@@ -21,13 +21,9 @@
 
 .grid .item {
   position: relative;
-  padding: 1vw;
-  background-size: 150% 100%;
+  padding: 10px;
   transition: background 500ms, outline 500ms;
-  background-position: top left;
-  outline: transparent;
-  /*resize: both;*/
-  /*overflow: auto;*/
+  outline: 2px white dashed;
 }
 .grid .item:hover{
   cursor: move;

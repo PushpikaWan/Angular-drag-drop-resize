@@ -1,19 +1,22 @@
 <div class="grid">
-  <div class="item" *ngFor="let item of items; let i = index"
-       [style.grid-column-start]="item.xStart" [style.grid-column-end]="item.xEnd"
-       [style.grid-row-start]="item.yStart" [style.grid-row-end]="item.yEnd" tabindex="1"
-       (dragover)="allowDrop($event)"
-       (drop)="drop($event)"
-       draggable="true" (dragstart)="drag($event)" id="{{item.id}}">
+  <div class="item" *ngFor="let item of items | keyvalue; let i = index"
+       [style.grid-column-start]="item.value.xStart" [style.grid-column-end]="item.value.xEnd"
+       [style.grid-row-start]="item.value.yStart" [style.grid-row-end]="item.value.yEnd" tabindex="1"
+       (dragover)="handleDragOver($event)"
+       (drop)="handleDrop($event)"
+       (dragenter)="handleDragEnter($event)"
+       (dragleave)="handleDragLeave($event)"
+       (dragend)="handleDragEnd($event)"
+       draggable="true" (dragstart)="handleDragStart($event)" id="{{item.value.id}}">
     <div class="box">
-      {{item.id}}<br/>
+      {{item.value.id}}<br/>
         Cols:
             <label>
-              <input class="number-spinner" #colsIn type="number" [value]="item.xEnd - item.xStart" (change)="updateCols(i,colsIn.value)">
+              <input class="number-spinner" #colsIn type="number" [value]="item.value.xEnd - item.value.xStart" (change)="updateCols(item.value.id,colsIn.value)">
             </label>
          Rows:
             <label>
-              <input class="number-spinner" #rowsIn type="number" [value]="item.yEnd - item.yStart" (change)="updateRows(i,rowsIn.value)">
+              <input class="number-spinner" #rowsIn type="number" [value]="item.value.yEnd - item.value.yStart" (change)="updateRows(item.value.id,rowsIn.value)">
             </label>
     </div>
   </div>

@@ -54,6 +54,8 @@ export class AppComponent {
         changingItem.xEnd += diff;
         this.items.set(val.id, changingItem);
         // recursion
+        console.log(changingItem);
+        this..detectChanges();
         return this.moveConflictingColumns(changingItem);
       });
   }
@@ -94,20 +96,24 @@ export class AppComponent {
     ev.preventDefault();
     this.overTarget = ev.target;
     if (this.overTarget && this.dragSrcEl && this.items.get(this.toInt(this.overTarget.id)) !== undefined && this.items.get(this.toInt(this.overTarget.id)) !== undefined) {
-      console.log('drop in ', this.items.get(this.dragSrcEl.id), 'to', this.items.get(this.overTarget.id));
+      // console.log('drop in ', this.items.get(this.dragSrcEl.id), 'to', this.items.get(this.overTarget.id));
       const dragSrcElement: DashboardItem = this.items.get(this.toInt(this.dragSrcEl.id));
+      const dragOverElement: DashboardItem = this.items.get(this.toInt(this.overTarget.id));
 
       const colDiff = dragSrcElement.xEnd - dragSrcElement.xStart;
       const rowDiff = dragSrcElement.yEnd - dragSrcElement.yStart;
-      dragSrcElement.xStart = this.items.get(this.toInt(this.overTarget.id)).xStart;
-      dragSrcElement.xEnd =  this.items.get(this.toInt(this.overTarget.id)).xStart + colDiff;
-      dragSrcElement.yStart = this.items.get(this.toInt(this.overTarget.id)).yStart;
-      dragSrcElement.yEnd =  this.items.get(this.toInt(this.overTarget.id)).yStart + rowDiff;
+      const isRowSpecificChange = Math.abs(dragSrcElement.xStart - dragOverElement.xStart) < Math.abs(dragSrcElement.yStart - dragOverElement.yStart);
+      dragSrcElement.xStart = dragOverElement.xStart;
+      dragSrcElement.xEnd =  dragOverElement.xStart + colDiff;
+      dragSrcElement.yStart = dragOverElement.yStart;
+      dragSrcElement.yEnd = dragOverElement.yStart + rowDiff;
 
       this.items.set(this.toInt(this.dragSrcEl.id), dragSrcElement);
-      console.log('swapping element', dragSrcElement);
-      this.moveConflictingColumns(dragSrcElement);
-      this.moveConflictingRows(dragSrcElement);
+      if (isRowSpecificChange) {
+        this.moveConflictingRows(dragSrcElement);
+      } else {
+        this.moveConflictingColumns(dragSrcElement);
+      }
     }
   }
 

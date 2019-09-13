@@ -8,8 +8,6 @@ import { Target } from '@angular/compiler';
   styleUrls: ['./app.component.css']
 })
 
-// todo - heights are difference when for same row sizes
-
 export class AppComponent {
   title = 'angular-drag-drop-resize';
   items: Map<number, DashboardItem> = new Map();
@@ -55,7 +53,7 @@ export class AppComponent {
         this.items.set(val.id, changingItem);
         // recursion
         console.log(changingItem);
-        this..detectChanges();
+        // this..detectChanges();
         return this.moveConflictingColumns(changingItem);
       });
   }

@@ -5,27 +5,25 @@
   width: 100%;
   box-sizing: border-box;
   max-width: 100vw;
-  padding: 1.5vw;
+  /*padding: 1.5vw;*/
 }
 
 .grid {
-  grid-template-columns: repeat(6, 1fr);
-  grid-template-rows: auto;
+  grid-template-columns: repeat(8,10.5vw); /* 100vw - (calculate : gap *7 + padding *2 + 2* margin) / 8 */
+  /*grid-auto-columns: 1fr;*/
+  grid-auto-rows: 1fr;
   border-color: #123dae;
-  background-color: #adada3;
-  /*grid-template-areas:*/
-  /*  "small1 hero   hero hero hero   med1"*/
-  /*  "small2 hero   hero hero hero   med2"*/
-  /*  "small3 small5 big1 big1 small7 small8"*/
-  /*  "small4  ch2   big1 big1  ch1    ch1"*/
-  /*  "small4 small6 big1 big1 small9 small10";*/
+  background-color:gray;
+  background-image: linear-gradient(0deg, white 1px, transparent 1px),
+  linear-gradient(90deg, gray 1px, transparent 1px),
+  linear-gradient(90deg, white 1px, transparent 1px);
+  background-size:1vh,10.5vw,12vw;
 }
 
 .grid .item {
   position: relative;
   padding: 10px;
   transition: background 500ms, outline 500ms;
-  outline: 2px white dashed;
 }
 .grid .item:hover{
   cursor: move;

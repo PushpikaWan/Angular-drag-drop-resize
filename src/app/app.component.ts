@@ -54,8 +54,6 @@ export class AppComponent {
         changingItem.xEnd += diff;
         this.items.set(val.id, changingItem);
         // recursion
-        console.log(changingItem);
-        // this..detectChanges();
         return this.moveConflictingColumns(changingItem);
       });
   }
@@ -96,7 +94,6 @@ export class AppComponent {
     ev.preventDefault();
     this.overTarget = ev.target;
     if (this.overTarget && this.dragSrcEl && this.items.get(this.toInt(this.overTarget.id)) !== undefined && this.items.get(this.toInt(this.overTarget.id)) !== undefined) {
-      // console.log('drop in ', this.items.get(this.dragSrcEl.id), 'to', this.items.get(this.overTarget.id));
       const dragSrcElement: DashboardItem = this.items.get(this.toInt(this.dragSrcEl.id));
       const dragOverElement: DashboardItem = this.items.get(this.toInt(this.overTarget.id));
 
@@ -125,7 +122,6 @@ export class AppComponent {
   handleDragStart(event) {
     this.renderer.setStyle(event.target, 'opacity', '0.4');
     this.dragSrcEl = event.target;
-    this.updatePreDragging();
     event.dataTransfer.effectAllowed = 'move';
     event.dataTransfer.setData('text', event.target.id);
   }
@@ -133,7 +129,7 @@ export class AppComponent {
   /**
    * update window client data, rows and columns count
    */
-  private updatePreDragging() {
+  private updatePreDropping() {
     const gridElement = document.getElementById('grid');
     this.gridClientX = gridElement.clientWidth;
     this.gridClientY = gridElement.clientHeight;
@@ -144,20 +140,16 @@ export class AppComponent {
           this.maxRowsCount = value.yEnd;
         }
       });
-    console.log('wid',this.gridClientX, 'height',this.gridClientY,
-      'max columns',this.maxColumnsCount,'maxRows', this.maxRowsCount);
   }
 
   handleDragEnd(event) {
     this.renderer.setStyle(event.target, 'opacity', '1.0');
     // todo check column is enough to drop there and add extra logic to move others
     if( this.dragSrcEl && this.items.get(this.toInt(this.dragSrcEl.id)) != undefined){
+      this.updatePreDropping();
       let movingElement: DashboardItem = this.items.get(this.toInt(this.dragSrcEl.id));
-
       const colDiff = movingElement.xEnd - movingElement.xStart;
       const rowDiff = movingElement.yEnd - movingElement.yStart;
-      console.log('target', event.target);
-      console.log('put col start',  (event.clientX / (this.gridClientX / this.maxColumnsCount)));
       movingElement.xStart = Math.ceil(event.clientX / (this.gridClientX / this.maxColumnsCount));
       movingElement.xEnd = movingElement.xStart + colDiff;
       movingElement.yStart = Math.ceil(event.clientY / (this.gridClientY / this.maxRowsCount));

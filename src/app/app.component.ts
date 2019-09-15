@@ -157,7 +157,12 @@ export class AppComponent {
 
       console.log('client y',event.clientY,'grid y', this.gridClientY,'max rows',this.maxRowsCount);
       this.items.set(this.toInt(this.dragSrcEl.id), movingElement);
-      this.moveConflictingColumns(movingElement);
+      if(rowDiff > colDiff){
+        this.moveConflictingRows(movingElement);
+      }
+      else{
+        this.moveConflictingColumns(movingElement);
+      }
     }
   }
 

@@ -45,7 +45,6 @@ export class AppComponent {
    * @param resizingItem - item that changed positions
    */
   private moveConflictingColumns(resizingItem: DashboardItem) {
-    console.log('conflicting column check with',resizingItem);
     Array.from(this.items.values())
       .filter(item => this.isConflictingItem(resizingItem, item))
       .forEach((val) => {
@@ -153,9 +152,10 @@ export class AppComponent {
       const rowDiff = movingElement.yEnd - movingElement.yStart;
       movingElement.xStart = Math.ceil(event.clientX / (this.gridClientX / this.maxColumnsCount));
       movingElement.xEnd = movingElement.xStart + colDiff;
-      movingElement.yStart = Math.floor(event.clientY / (this.gridClientY / this.maxRowsCount));
+      movingElement.yStart = Math.ceil(event.clientY / (this.gridClientY / this.maxRowsCount));
       movingElement.yEnd = movingElement.yStart + rowDiff;
 
+      console.log('client y',event.clientY,'grid y', this.gridClientY,'max rows',this.maxRowsCount);
       this.items.set(this.toInt(this.dragSrcEl.id), movingElement);
       this.moveConflictingColumns(movingElement);
     }

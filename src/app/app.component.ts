@@ -1,6 +1,5 @@
-import { Component, Renderer2 } from '@angular/core';
+import {Component, HostListener, Renderer2} from '@angular/core';
 import { DashboardControllingService } from './dashboard-controlling.service';
-import { Target } from '@angular/compiler';
 
 @Component({
   selector: 'app-root',
@@ -11,9 +10,12 @@ import { Target } from '@angular/compiler';
 export class AppComponent {
   title = 'angular-drag-drop-resize';
   items: Map<number, DashboardItem> = new Map();
-  private dragSrcEl: Target = null;
-  private innerHTML: string;
-  private overTarget: Target = null;
+  private dragSrcEl: HTMLDivElement = null;
+  private overTarget: HTMLDivElement = null;
+  private gridClientX: number;
+  private gridClientY: number;
+  private maxColumnsCount: number = 8; //this is static can only change by css
+  private maxRowsCount: number = 0;
 
   constructor(private dashboardControllingService: DashboardControllingService, private renderer: Renderer2) {
     this.items.set(1, {id: 1, xStart: 1, xEnd: 2, yStart: 1, yEnd: 2});
@@ -81,12 +83,12 @@ export class AppComponent {
       ev.stopPropagation(); // Stops some browsers from redirecting.
     }
     ev.preventDefault();
-    const data = ev.dataTransfer.getData('text');
+    // const data = ev.dataTransfer.getData('text');
   }
 
   handleDragOver(ev) {
     ev.preventDefault();
-    const data = ev.dataTransfer.getData('text');
+    // const data = ev.dataTransfer.getData('text');
     ev.dataTransfer.dropEffect = 'move';
   }
 
@@ -115,25 +117,60 @@ export class AppComponent {
     }
   }
 
-  handleDragLeave(ev) {
-    ev.preventDefault();
+  handleDragLeave(event) {
+    event.preventDefault();
     this.overTarget = null;
   }
 
   handleDragStart(event) {
     this.renderer.setStyle(event.target, 'opacity', '0.4');
     this.dragSrcEl = event.target;
-
+    this.updatePreDragging();
     event.dataTransfer.effectAllowed = 'move';
     event.dataTransfer.setData('text', event.target.id);
   }
 
+  /**
+   * update window client data, rows and columns count
+   */
+  private updatePreDragging() {
+    const gridElement = document.getElementById('grid');
+    this.gridClientX = gridElement.clientWidth;
+    this.gridClientY = gridElement.clientHeight;
+
+    Array.from(this.items.values())
+      .forEach(value => {
+        if(value.yEnd > this.maxRowsCount){
+          this.maxRowsCount = value.yEnd;
+        }
+      });
+    console.log('wid',this.gridClientX, 'height',this.gridClientY,
+      'max columns',this.maxColumnsCount,'maxRows', this.maxRowsCount);
+  }
+
   handleDragEnd(event) {
     this.renderer.setStyle(event.target, 'opacity', '1.0');
+    // todo check column is enough to drop there and add extra logic to move others
+    if( this.dragSrcEl && this.items.get(this.toInt(this.dragSrcEl.id)) != undefined){
+      let movingElement: DashboardItem = this.items.get(this.toInt(this.dragSrcEl.id));
+
+      const colDiff = movingElement.xEnd - movingElement.xStart;
+      const rowDiff = movingElement.yEnd - movingElement.yStart;
+      console.log('target', event.target);
+      console.log('put col start',  (event.clientX / (this.gridClientX / this.maxColumnsCount)));
+      movingElement.xStart = Math.ceil(event.clientX / (this.gridClientX / this.maxColumnsCount));
+      movingElement.xEnd = movingElement.xStart + colDiff;
+      movingElement.yStart = Math.ceil(event.clientY / (this.gridClientY / this.maxRowsCount));
+      movingElement.yEnd = movingElement.yStart + rowDiff;
+
+      this.items.set(this.toInt(this.dragSrcEl.id), movingElement);
+      this.moveConflictingRows(movingElement);
+    }
   }
 
   private isConflictingItem(resizingItem: DashboardItem, item: DashboardItem): boolean {
-    return item.xStart < resizingItem.xEnd && item.xEnd > resizingItem.xStart && item.yStart < resizingItem.yEnd && item.yEnd > resizingItem.yStart && item.id !== resizingItem.id;
+    return item.xStart < resizingItem.xEnd && item.xEnd > resizingItem.xStart && item.yStart < resizingItem.yEnd
+      && item.yEnd > resizingItem.yStart && item.id !== resizingItem.id;
   }
 
   private toInt(val: any, fallbackValue: number = 0): number {

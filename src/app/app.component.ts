@@ -152,7 +152,7 @@ export class AppComponent {
       const rowDiff = movingElement.yEnd - movingElement.yStart;
       movingElement.xStart = Math.ceil(event.clientX / (this.gridClientX / this.maxColumnsCount));
       movingElement.xEnd = movingElement.xStart + colDiff;
-      movingElement.yStart = Math.ceil(event.clientY / (this.gridClientY / this.maxRowsCount));
+      movingElement.yStart = Math.floor(event.clientY / (this.gridClientY / this.maxRowsCount));
       movingElement.yEnd = movingElement.yStart + rowDiff;
 
       this.items.set(this.toInt(this.dragSrcEl.id), movingElement);

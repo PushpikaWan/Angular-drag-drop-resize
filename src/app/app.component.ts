@@ -45,6 +45,7 @@ export class AppComponent {
    * @param resizingItem - item that changed positions
    */
   private moveConflictingColumns(resizingItem: DashboardItem) {
+    console.log('conflicting column check with',resizingItem);
     Array.from(this.items.values())
       .filter(item => this.isConflictingItem(resizingItem, item))
       .forEach((val) => {
@@ -133,11 +134,11 @@ export class AppComponent {
     const gridElement = document.getElementById('grid');
     this.gridClientX = gridElement.clientWidth;
     this.gridClientY = gridElement.clientHeight;
-
+    this.maxRowsCount = 0;
     Array.from(this.items.values())
       .forEach(value => {
-        if(value.yEnd > this.maxRowsCount){
-          this.maxRowsCount = value.yEnd;
+        if(value.yEnd - 1 > this.maxRowsCount){
+          this.maxRowsCount = value.yEnd - 1;
         }
       });
   }
@@ -156,13 +157,14 @@ export class AppComponent {
       movingElement.yEnd = movingElement.yStart + rowDiff;
 
       this.items.set(this.toInt(this.dragSrcEl.id), movingElement);
-      this.moveConflictingRows(movingElement);
+      this.moveConflictingColumns(movingElement);
     }
   }
 
   private isConflictingItem(resizingItem: DashboardItem, item: DashboardItem): boolean {
-    return item.xStart < resizingItem.xEnd && item.xEnd > resizingItem.xStart && item.yStart < resizingItem.yEnd
-      && item.yEnd > resizingItem.yStart && item.id !== resizingItem.id;
+    // console.log('is conflicting',resizingItem,item);
+    return ( item.xStart === resizingItem.xStart || item.xEnd === resizingItem.xEnd || (item.xStart < resizingItem.xEnd && item.xEnd > resizingItem.xStart)) &&
+      item.yStart < resizingItem.yEnd && item.yEnd > resizingItem.yStart && item.id !== resizingItem.id;
   }
 
   private toInt(val: any, fallbackValue: number = 0): number {

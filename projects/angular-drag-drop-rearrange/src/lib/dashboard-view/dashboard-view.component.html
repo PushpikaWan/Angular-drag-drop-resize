@@ -1,18 +1,23 @@
-<div cdkDropListGroup class="example-boundary">
-    <div cdkDropList class="example-list" (cdkDropListDropped)="drop($event)">
-     <div class="example-box" *ngFor="let movie of movies" cdkDragBoundary=".example-boundary" (document:resize)="onResize($event)"
-          cdkDrag>
-     <div class="example-handle" cdkDragHandle>
-    <svg width="24px" fill="currentColor" viewBox="0 0 24 24">
-      <path
-        d="M10 9h4V6h3l-5-5-5 5h3v3zm-1 1H6V7l-5 5 5 5v-3h3v-4zm14 2l-5-5v3h-3v4h3v3l5-5zm-9 3h-4v3H7l5 5 5-5h-3v-3z"></path>
-      <path d="M0 0h24v24H0z" fill="none"></path>
-    </svg>
-  </div>
-    <div class="example-custom-placeholder" *cdkDragPlaceholder></div>
-       {{movie}}
-  </div>
+<div class="grid" id="grid">
+  <div class="item" *ngFor="let item of dashboardItems | keyvalue; let i = index"
+       [style.grid-column-start]="item.value.xStart" [style.grid-column-end]="item.value.xEnd"
+       [style.grid-row-start]="item.value.yStart" [style.grid-row-end]="item.value.yEnd" tabindex="1"
+       (dragover)="handleDragOver($event)"
+       (drop)="handleDrop($event)"
+       (dragenter)="handleDragEnter($event)"
+       (dragleave)="handleDragLeave($event)"
+       (dragend)="handleDragEnd($event)"
+       draggable="true" (dragstart)="handleDragStart($event)" id="{{item.value.id}}">
+    <div class="box">
+      {{item.value.id}}<br/>
+        Cols:
+            <label>
+              <input class="number-spinner" #colsIn type="number" [value]="item.value.xEnd - item.value.xStart" (change)="updateCols(item.value.id,colsIn.value)">
+            </label>
+         Rows:
+            <label>
+              <input class="number-spinner" #rowsIn type="number" [value]="item.value.yEnd - item.value.yStart" (change)="updateRows(item.value.id,rowsIn.value)">
+            </label>
+    </div>
   </div>
 </div>
-
-

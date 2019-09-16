@@ -1,17 +1,16 @@
 .fullLayout{
     border:none;
-    margin: 10px 10px;
-    width: 100%;
+    width: 100vw;
     height: 100vh;
     display: flex;
     flex-direction: column;
   }
 .dashboardControl{
-    width: 100%;
+    width: 100vw;
     flex: 0.1;
 }
 
 .dashboard{
-    width: 100%;
+    width: 100vw;
     flex: 0.9;
 }

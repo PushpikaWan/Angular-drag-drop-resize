@@ -1,6 +1,8 @@
 export class DashboardItem {
   id: number;
-  content?: any;
-  columns: number;
-  rows: number;
+  xStart: number;
+  xEnd: number;
+  yStart: number;
+  yEnd: number;
+  content?: string;
 }

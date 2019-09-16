@@ -10,7 +10,7 @@
     "e2e": "ng e2e",
     "build-lib": "ng build angular-drag-drop-rearrange",
     "build-demo": "ng build --prod",
-    "build-npm": "ng build angular-gridster2 --prod",
+    "build-npm": "ng build angular-drag-drop-rearrange --prod",
     "deploy": "npm run build-npm && ng deploy"
   },
   "private": true,

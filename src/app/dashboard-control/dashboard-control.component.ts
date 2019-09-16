@@ -1,6 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { DashboardControllingService } from 'projects/angular-drag-drop-rearrange/src/lib/services/dashboard-controlling.service';
 import { Dashboard } from 'projects/angular-drag-drop-rearrange/src/lib/dashboard.model';
+import { DashboardItem } from 'angular-drag-drop-rearrange/lib/dashboard-item.model';
 
 @Component({
   selector: 'app-dashboard-control',
@@ -22,26 +23,32 @@ export class DashboardControlComponent implements OnInit, OnDestroy {
   }
 
   private initialiseTemplates() {
+    const itemsMap1: Map<number, DashboardItem> = new Map();
+    itemsMap1.set(1, { id: 1, xStart: 1, xEnd: 2, yStart: 1, yEnd: 2 });
+    itemsMap1.set(2, { id: 2, xStart: 2, xEnd: 4, yStart: 1, yEnd: 3 });
+    itemsMap1.set(3, { id: 3, xStart: 4, xEnd: 5, yStart: 1, yEnd: 2 });
+    itemsMap1.set(4, { id: 4, xStart: 1, xEnd: 2, yStart: 2, yEnd: 5 });
+    itemsMap1.set(5, { id: 5, xStart: 2, xEnd: 3, yStart: 3, yEnd: 5 });
+    itemsMap1.set(6, { id: 6, xStart: 3, xEnd: 4, yStart: 3, yEnd: 5 });
+
+    const itemsMap2: Map<number, DashboardItem> = new Map();
+    itemsMap2.set(1, { id: 1, xStart: 1, xEnd: 2, yStart: 1, yEnd: 2 });
+    itemsMap2.set(2, { id: 2, xStart: 2, xEnd: 4, yStart: 1, yEnd: 3 });
+    itemsMap2.set(3, { id: 3, xStart: 4, xEnd: 5, yStart: 1, yEnd: 2 });
     this.dashboards = [
       {
-        counter: 3,
-        dashboardItems: [
-          { id: 1, content: 'card 1', columns: 2, rows: 3 },
-          { id: 2, content: 'card 2', columns: 1, rows: 1 },
-          { id: 3, content: 'card 3', columns: 2, rows: 2 }
-        ]
+        counter: itemsMap1.size,
+        dashboardItems: itemsMap1
       },
       {
-        counter: 0,
-        dashboardItems: [
-          { id: 1, content: 'card 1', columns: 2, rows: 3 }
-        ]
+        counter: itemsMap2.size,
+        dashboardItems: itemsMap2
       }
     ];
   }
 
   ngOnDestroy(): void {
-    this.dashboardService.dashboardComponentListChanged.unsubscribe();
+    this.dashboardService.dashboardItemsDataChanged.unsubscribe();
   }
 
   addItem(cols: any, rows: any) {
@@ -54,32 +61,14 @@ export class DashboardControlComponent implements OnInit, OnDestroy {
   }
 
   setTemplate() {
-    this.dashboardService.loadDashBoradItemsByList(this.dashboards[this.selectedTemplate]);
+    this.dashboardService.loadDashboard(this.dashboards[this.selectedTemplate]);
   }
 
   resetPanel() {
-    this.dashboardService.resetPanel();
+    this.dashboardService.resetBoard();
   }
 
   counter(i: number) {
     return new Array(i);
   }
-
-  orderChanged(e: any): void {
-  }
-
-  updateCols(val: any): void {
-    this.cols = this.toInt(val, 3) || 3;
-  }
-
-  updateCardMaxRows(val: any): void {
-    this.cardMaxRows = this.toInt(val, 2) || 2;
-  }
-
-  private toInt(val: any, fallbackValue: number = 0): number {
-    const normalized = String(val).replace(/[\D]/g, '');
-    const v = Number(normalized);
-    return isNaN(v) ? fallbackValue : v;
-  }
-
 }

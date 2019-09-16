@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, HostListener, OnInit, Renderer2} from '@angular/core';
 import { DashboardControllingService } from '../services/dashboard-controlling.service';
 import { DashboardItem } from '../dashboard-item.model';
 
@@ -10,21 +10,15 @@ import { DashboardItem } from '../dashboard-item.model';
 export class DashboardViewComponent {
   dashboardItems: Map<number, DashboardItem> = new Map();
 
-  constructor(private dashboardControllingService: DashboardControllingService) {
-    this.registerListeners();
-    // this.initialiseDashboard();
+  @HostListener('window:resize', ['$event'])
+  onResize(event){
+    this.dashboardControllingService.triggerResizeWindow(event.target.innerWidth, event.target.innerHeight);
   }
 
-  // private initialiseDashboard() {
-  //   const items: Map<number, DashboardItem> = new Map();
-  //   items.set(1, { id: 1, xStart: 1, xEnd: 2, yStart: 1, yEnd: 2 });
-  //   items.set(2, { id: 2, xStart: 2, xEnd: 4, yStart: 1, yEnd: 3 });
-  //   items.set(3, { id: 3, xStart: 4, xEnd: 5, yStart: 1, yEnd: 2 });
-  //   items.set(4, { id: 4, xStart: 1, xEnd: 2, yStart: 2, yEnd: 5 });
-  //   items.set(5, { id: 5, xStart: 2, xEnd: 3, yStart: 3, yEnd: 5 });
-  //   items.set(6, { id: 6, xStart: 3, xEnd: 4, yStart: 3, yEnd: 5 });
-  //   this.dashboardControllingService.loadDashboard(items);
-  // }
+  constructor(private dashboardControllingService: DashboardControllingService, private renderer: Renderer2) {
+    this.registerListeners();
+    // this.dashboardControllingService.triggerResizeWindow(window.innerWidth, window.innerHeight);
+  }
 
   private registerListeners() {
     this.dashboardControllingService.dashboardItemsDataChanged.subscribe(

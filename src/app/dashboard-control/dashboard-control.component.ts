@@ -1,7 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { DashboardControllingService } from 'projects/angular-drag-drop-rearrange/src/lib/services/dashboard-controlling.service';
 import { Dashboard } from 'projects/angular-drag-drop-rearrange/src/lib/dashboard.model';
-import { DashboardItem } from 'angular-drag-drop-rearrange/lib/dashboard-item.model';
+import { DashboardItem } from 'projects/angular-drag-drop-rearrange/src/lib/dashboard-item.model';
 
 @Component({
   selector: 'app-dashboard-control',

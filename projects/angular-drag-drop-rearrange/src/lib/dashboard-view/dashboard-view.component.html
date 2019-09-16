@@ -10,14 +10,23 @@
        draggable="true" (dragstart)="handleDragStart($event)" id="{{item.value.id}}">
     <div class="box">
       {{item.value.id}}<br/>
-        Cols:
-            <label>
-              <input class="number-spinner" #colsIn type="number" [value]="item.value.xEnd - item.value.xStart" (change)="updateCols(item.value.id,colsIn.value)">
-            </label>
-         Rows:
-            <label>
-              <input class="number-spinner" #rowsIn type="number" [value]="item.value.yEnd - item.value.yStart" (change)="updateRows(item.value.id,rowsIn.value)">
-            </label>
+      Cols:
+      <label>
+        <input class="number-spinner" #colsIn type="number" [value]="item.value.xEnd - item.value.xStart" (change)="updateCols(item.value.id,colsIn.value)">
+      </label>
+      Rows:
+      <label>
+        <input class="number-spinner" #rowsIn type="number" [value]="item.value.yEnd - item.value.yStart" (change)="updateRows(item.value.id,rowsIn.value)">
+      </label>
+    </div>
+  </div>
+</div>
+<div class="grid_small" id="grid_small">
+  <div class="item" *ngFor="let item of dashboardItems | keyvalue; let i = index"
+       [style.grid-column-start]="1" [style.grid-column-end]="2"
+       [style.grid-row-start]="i+1" [style.grid-row-end]="i+2" tabindex="1">
+    <div class="box">
+      {{item.value.id}}
     </div>
   </div>
 </div>

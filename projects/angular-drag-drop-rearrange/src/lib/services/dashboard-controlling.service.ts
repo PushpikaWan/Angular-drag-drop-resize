@@ -1,4 +1,4 @@
-import { Injectable, Renderer2, RendererFactory2 } from '@angular/core';
+import {HostListener, Injectable, Renderer2, RendererFactory2} from '@angular/core';
 import { DashboardItem } from '../dashboard-item.model';
 import { Subject } from 'rxjs';
 import { Dashboard } from '../dashboard.model';
@@ -37,6 +37,7 @@ export class DashboardControllingService {
 
   public loadDashboard(dashboard: Dashboard) {
     this.items = dashboard.dashboardItems;
+    this.triggerResizeWindow(window.innerWidth,window.innerHeight);
     this.dashboardItemsDataChanged.next(this.items);
   }
 
@@ -58,6 +59,26 @@ export class DashboardControllingService {
   public resetBoard() {
     this.items = new Map();
     this.dashboardItemsDataChanged.next(this.items);
+  }
+
+  private updateMaxColumnCountWhenResize(maxColumnCount: number){
+    this.maxColumnsCount = maxColumnCount;
+    Array.from(this.items.values())
+      .sort((n1,n2) => n1.xStart - n2.xEnd);
+    this.dashboardItemsDataChanged.next(this.items);
+  }
+
+  public triggerResizeWindow(width:number, height:number){
+    // todo check height and update resize event at initial time
+    if(width <= 700) {
+      this.renderer.setStyle( document.getElementById('grid'), 'display', 'none');
+      this.renderer.setStyle( document.getElementById('grid_small'), 'display', 'grid');
+      this.updateMaxColumnCountWhenResize(1);
+    } else{
+      this.renderer.setStyle( document.getElementById('grid_small'), 'display', 'none');
+      this.renderer.setStyle( document.getElementById('grid'), 'display', 'grid');
+      this.updateMaxColumnCountWhenResize(8);
+    }
   }
 
   public handleDrop(event) {
@@ -122,7 +143,7 @@ export class DashboardControllingService {
       const rowDiff = movingElement.yEnd - movingElement.yStart;
       movingElement.xStart = Math.ceil(event.clientX / (this.gridClientX / this.maxColumnsCount));
       movingElement.xEnd = movingElement.xStart + colDiff;
-      movingElement.yStart = Math.ceil(event.clientY / (this.gridClientY / this.maxRowsCount));
+      movingElement.yStart = Math.floor(event.clientY / (this.gridClientY / this.maxRowsCount));
       movingElement.yEnd = movingElement.yStart + rowDiff;
 
       console.log('client y', event.clientY, 'grid y', this.gridClientY, 'max rows', this.maxRowsCount);

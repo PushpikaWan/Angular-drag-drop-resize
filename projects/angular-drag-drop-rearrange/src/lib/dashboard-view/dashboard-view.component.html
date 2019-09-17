@@ -1,15 +1,16 @@
 <div class="grid" id="grid">
   <div class="item" *ngFor="let item of dashboardItems | keyvalue; let i = index"
-       [style.grid-column-start]="isMinimized? 1 : item.value.xStart" [style.grid-column-end]="isMinimized?  2: item.value.xEnd"
-       [style.grid-row-start]="isMinimized? i+1 : item.value.yStart" [style.grid-row-end]="isMinimized? i+2 : item.value.yEnd" tabindex="1"
+       [style.grid-column-start]= "columnCountPerRow == 1 ? 1 : columnCountPerRow == 2?  (i % 2) + 1: item.value.xStart"
+       [style.grid-column-end]="columnCountPerRow == 1 ? 2 : columnCountPerRow == 2?  (i % 2) + 2: item.value.xEnd"
+       [style.grid-row-start]="columnCountPerRow == 1 ? i+1 : columnCountPerRow == 2?   getFloorAfterDividedByTwo(i)+1 : item.value.yStart"
+       [style.grid-row-end]="columnCountPerRow == 1 ? i+2 : columnCountPerRow == 2?  getFloorAfterDividedByTwo(i)+2: item.value.yEnd" tabindex="1"
        (dragover)="handleDragOver($event)"
        (drop)="handleDrop($event)"
        (dragenter)="handleDragEnter($event)"
        (dragleave)="handleDragLeave($event)"
        (dragend)="handleDragEnd($event)"
        draggable="true" (dragstart)="handleDragStart($event)" id="{{item.value.id}}">
-    <div class="box" [style.display]="isMinimized? 'none':'grid'">
-      {{item.value.id}}<br/>
+    <div class="boxheader" [style.display]="columnCountPerRow === 8 ? 'none':'grid'">
       Cols:
       <label>
         <input class="number-spinner" #colsIn type="number" [value]="item.value.xEnd - item.value.xStart" (change)="updateCols(item.value.id,colsIn.value)">
@@ -19,5 +20,6 @@
         <input class="number-spinner" #rowsIn type="number" [value]="item.value.yEnd - item.value.yStart" (change)="updateRows(item.value.id,rowsIn.value)">
       </label>
     </div>
+    {{item.value.id}}<br/>
   </div>
 </div>

@@ -37,7 +37,7 @@ export class DashboardControllingService {
 
   public loadDashboard(dashboard: Dashboard) {
     this.items = dashboard.dashboardItems;
-    this.triggerResizeWindow(window.innerWidth,window.innerHeight);
+    // this.triggerResizeWindow(window.innerWidth, window.innerHeight);
     this.dashboardItemsDataChanged.next(this.items);
   }
 
@@ -61,24 +61,11 @@ export class DashboardControllingService {
     this.dashboardItemsDataChanged.next(this.items);
   }
 
-  private updateMaxColumnCountWhenResize(maxColumnCount: number){
+  public updateMaxColumnCountWhenResize(maxColumnCount: number){
     this.maxColumnsCount = maxColumnCount;
     Array.from(this.items.values())
-      .sort((n1,n2) => n1.xStart - n2.xEnd);
+      .sort((n1, n2) => n1.xStart - n2.xEnd);
     this.dashboardItemsDataChanged.next(this.items);
-  }
-
-  public triggerResizeWindow(width:number, height:number){
-    // todo check height and update resize event at initial time
-    if(width <= 700) {
-      this.renderer.setStyle( document.getElementById('grid'), 'display', 'none');
-      this.renderer.setStyle( document.getElementById('grid_small'), 'display', 'grid');
-      this.updateMaxColumnCountWhenResize(1);
-    } else{
-      this.renderer.setStyle( document.getElementById('grid_small'), 'display', 'none');
-      this.renderer.setStyle( document.getElementById('grid'), 'display', 'grid');
-      this.updateMaxColumnCountWhenResize(8);
-    }
   }
 
   public handleDrop(event) {

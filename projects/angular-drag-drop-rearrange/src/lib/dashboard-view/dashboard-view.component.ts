@@ -9,10 +9,12 @@ import { DashboardItem } from '../dashboard-item.model';
 })
 export class DashboardViewComponent {
   dashboardItems: Map<number, DashboardItem> = new Map();
+  isMinimized = false;
 
   @HostListener('window:resize', ['$event'])
-  onResize(event){
-    this.dashboardControllingService.triggerResizeWindow(event.target.innerWidth, event.target.innerHeight);
+  onResize(event) {
+    console.log('resize event:', event.target.innerWidth);
+    this.triggerResizeWindow(event.target.innerWidth, event.target.innerHeight);
   }
 
   constructor(private dashboardControllingService: DashboardControllingService, private renderer: Renderer2) {
@@ -24,11 +26,22 @@ export class DashboardViewComponent {
     this.dashboardControllingService.dashboardItemsDataChanged.subscribe(
       (data: Map<number, DashboardItem>) => {
         this.dashboardItems = data;
-        console.log(this.dashboardItems);
       }
     );
   }
 
+  private triggerResizeWindow(width: number, height: number) {
+    // todo check height and update resize event at initial time
+    if (width <= 376) {
+      this.dashboardControllingService.updateMaxColumnCountWhenResize(1);
+      this.isMinimized = true;
+      console.log('minimized');
+    } else{
+      this.dashboardControllingService.updateMaxColumnCountWhenResize(8);
+      this.isMinimized = false;
+      console.log('max', 'width', width);
+    }
+  }
   updateCols(index: number, newColumnValue: any) {
     this.dashboardControllingService.updateCols(index, newColumnValue);
   }

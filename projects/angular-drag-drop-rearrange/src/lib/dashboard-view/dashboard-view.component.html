@@ -9,8 +9,8 @@
        (dragenter)="handleDragEnter($event)"
        (dragleave)="handleDragLeave($event)"
        (dragend)="handleDragEnd($event)"
-       draggable="true" (dragstart)="handleDragStart($event)" id="{{item.value.id}}">
-    <div class="boxheader" [style.display]="columnCountPerRow !== 8 ? 'none':'inline'">
+       draggable=true (dragstart)="handleDragStart($event)" id="{{item.value.id}}">
+    <div class="boxheader" [style.display]="columnCountPerRow === 8? 'inline':'none'">
       Cols:
       <label>
         <input class="number-spinner" #colsIn type="number" [value]="item.value.xEnd - item.value.xStart" (change)="updateCols(item.value.id,colsIn.value)">

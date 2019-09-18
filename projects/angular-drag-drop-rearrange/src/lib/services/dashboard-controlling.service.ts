@@ -17,6 +17,7 @@ export class DashboardControllingService {
   private maxRowsCount = 0;
   private renderer: Renderer2;
   public dashboardItemsDataChanged = new Subject();
+  public isDragEnable = this.maxColumnsCount === 8;
 
   private static isConflictingItem(resizingItem: DashboardItem, item: DashboardItem): boolean {
     // console.log('is conflicting',resizingItem,item);
@@ -61,10 +62,11 @@ export class DashboardControllingService {
     this.dashboardItemsDataChanged.next(this.items);
   }
 
-  public updateMaxColumnCountWhenResize(maxColumnCount: number){
+  public updateMaxColumnCountWhenResize(maxColumnCount: number) {
     this.maxColumnsCount = maxColumnCount;
     Array.from(this.items.values())
       .sort((n1, n2) => n1.xStart - n2.xEnd);
+    this.isDragEnable = this.maxColumnsCount === 8;
     this.dashboardItemsDataChanged.next(this.items);
   }
 
@@ -114,6 +116,9 @@ export class DashboardControllingService {
   }
 
   public handleDragStart(event) {
+    if (!this.isDragEnable) {
+      return;
+    }
     this.renderer.setStyle(event.target, 'opacity', '0.4');
     this.dragSrcEl = event.target;
     event.dataTransfer.effectAllowed = 'move';
@@ -121,6 +126,9 @@ export class DashboardControllingService {
   }
 
   public handleDragEnd(event) {
+    if (!this.isDragEnable) {
+      return;
+    }
     this.renderer.setStyle(event.target, 'opacity', '1.0');
     // todo check column is enough to drop there and add extra logic to move others
     if (this.dragSrcEl && this.items.get(DashboardControllingService.toInt(this.dragSrcEl.id)) !== undefined) {
@@ -196,6 +204,11 @@ export class DashboardControllingService {
   }
 
   private updateDashboardItems(id: number, dashboardItem: DashboardItem) {
+    // to prevent changes of non standard resolution
+    if (!this.isDragEnable) {
+      return;
+    }
+    console.log('items data changed');
     this.items.set(id, dashboardItem);
     this.dashboardItemsDataChanged.next(this.items);
   }

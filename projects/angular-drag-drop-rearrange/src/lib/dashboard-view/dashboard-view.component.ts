@@ -39,7 +39,6 @@ export class DashboardViewComponent {
     } else {
       this.columnCountPerRow = 8;
     }
-    console.log('col count', this.columnCountPerRow, 'check', this.columnCountPerRow !== 8);
     this.dashboardControllingService.updateMaxColumnCountWhenResize(this.columnCountPerRow);
   }
   getFloorAfterDividedByTwo( value: number): number {

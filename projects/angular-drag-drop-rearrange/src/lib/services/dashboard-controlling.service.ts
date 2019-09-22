@@ -44,16 +44,20 @@ export class DashboardControllingService {
 
   public updateCols(index: number, newColumnValue: any) {
     const resizingElement: DashboardItem = this.items.get(index);
+    // to handle max rows exceed issue
+    if (DashboardControllingService.toInt(newColumnValue) > this.maxColumnsCount + 1) {
+      return;
+    }
     resizingElement.xEnd = this.items.get(index).xStart + DashboardControllingService.toInt(newColumnValue);
     this.updateDashboardItems(index, resizingElement);
-    this.moveConflictingColumns(this.items.get(index));
+    this.moveLeftToConflictingColumns(this.items.get(index));
   }
 
   public updateRows(index: number, newRowValue: any) {
     const resizingElement: DashboardItem = this.items.get(index);
     resizingElement.yEnd = this.items.get(index).yStart + DashboardControllingService.toInt(newRowValue);
     this.updateDashboardItems(index, resizingElement);
-    this.moveConflictingRows(this.items.get(index));
+    this.moveDownToConflictingRows(this.items.get(index));
   }
 
   public addItem(columns: number, rows: number) {}
@@ -103,9 +107,9 @@ export class DashboardControllingService {
     //
     //   this.updateDashboardItems(this.toInt(this.dragSrcEl.id), dragSrcElement);
     //   if (isRowSpecificChange) {
-    //     this.moveConflictingRows(dragSrcElement);
+    //     this.moveDownToConflictingRows(dragSrcElement);
     //   } else {
-    //     this.moveConflictingColumns(dragSrcElement);
+    //     this.moveLeftToConflictingColumns(dragSrcElement);
     //   }
     // }
   }
@@ -144,9 +148,9 @@ export class DashboardControllingService {
       console.log('client y', event.clientY, 'grid y', this.gridClientY, 'max rows', this.maxRowsCount);
       this.updateDashboardItems(DashboardControllingService.toInt(this.dragSrcEl.id), movingElement);
       if (rowDiff > colDiff) {
-        this.moveConflictingRows(movingElement);
+        this.moveDownToConflictingRows(movingElement);
       } else {
-        this.moveConflictingColumns(movingElement);
+        this.moveLeftToConflictingColumns(movingElement);
       }
     }
   }
@@ -155,17 +159,25 @@ export class DashboardControllingService {
    * This function is used to arrange other conflicting blocks when resizing columns of elements
    * @param resizingItem - item that changed positions
    */
-  private moveConflictingColumns(resizingItem: DashboardItem) {
+  private moveLeftToConflictingColumns(resizingItem: DashboardItem) {
     Array.from(this.items.values())
       .filter(item => DashboardControllingService.isConflictingItem(resizingItem, item))
       .forEach((val) => {
         const diff = resizingItem.xEnd - val.xStart;
         const changingItem: DashboardItem = this.items.get(val.id);
-        changingItem.xStart += diff;
-        changingItem.xEnd += diff;
-        this.updateDashboardItems(val.id, changingItem);
-        // recursion
-        return this.moveConflictingColumns(changingItem);
+        // to handle max rows exceed issue
+        if (changingItem.xEnd + diff > this.maxColumnsCount + 1) {
+          const yDiff = changingItem.yEnd - changingItem.yStart;
+          changingItem.yStart += yDiff;
+          changingItem.yEnd += yDiff;
+          this.updateDashboardItems(val.id, changingItem);
+          return this.moveDownToConflictingRows(changingItem);
+        } else{
+          changingItem.xStart += diff;
+          changingItem.xEnd += diff;
+          this.updateDashboardItems(val.id, changingItem);
+          return this.moveLeftToConflictingColumns(changingItem);
+        }
       });
   }
 
@@ -173,7 +185,7 @@ export class DashboardControllingService {
    * This function is used to arrange other conflicting blocks when resizing rows of elements
    * @param resizingItem - item that changed positions
    */
-  private moveConflictingRows(resizingItem: DashboardItem) {
+  private moveDownToConflictingRows(resizingItem: DashboardItem) {
     Array.from(this.items.values())
       .filter(item => DashboardControllingService.isConflictingItem(resizingItem, item))
       .forEach((val) => {
@@ -183,7 +195,7 @@ export class DashboardControllingService {
         changingItem.yEnd += diff;
         this.updateDashboardItems(val.id, changingItem);
         // recursion
-        return this.moveConflictingRows(changingItem);
+        return this.moveDownToConflictingRows(changingItem);
       });
   }
 

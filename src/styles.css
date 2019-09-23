@@ -1,1 +1,20 @@
-/* You can add global styles to this file, and also import other style files */
+@import "~bootswatch/dist/cosmo/bootstrap.css";
+
+.vh-75 {
+  height: 75vh!important;
+}
+.slide h1 {
+  font-weight: bold;
+}
+.slide h2 {
+  font-weight: lighter;
+}
+.slide ul {
+  font-size: 24px;
+}
+.slide ul li {
+  margin: 20px 0;
+}
+.slide pre {
+  font-size: 24px;
+}

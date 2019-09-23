@@ -4,7 +4,7 @@ import { Component, Input } from '@angular/core'
   selector: 'app-slide-image',
   template: `
     <div class="slide">
-      <h1 class="my-5">{{content.title}}</h1>
+      <h1 class="my-5" style="text-align: center">{{content.title}}</h1>
       <div class="my-5 text-center">
         <img class="img-fluid" [attr.src]="content.image" />
       </div>

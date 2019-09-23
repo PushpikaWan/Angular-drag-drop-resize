@@ -9,6 +9,7 @@ import { Component, Input } from '@angular/core'
     <app-slide-list *ngIf="slide.type === 'list'" [content]="slide.content"></app-slide-list>
     <app-slide-title *ngIf="slide.type === 'title'" [content]="slide.content"></app-slide-title>
     <app-slide-youtube *ngIf="slide.type === 'youtube'" [content]="slide.content"></app-slide-youtube>
+    <app-slide-thankyou *ngIf="slide.type === 'thankyou'" [content]="slide.content"></app-slide-thankyou>
     <div *ngIf="unknown(slide.type)" class="slide">
       <h1>Unknown slide type: </h1>
       <pre>{{slide | json}}</pre>

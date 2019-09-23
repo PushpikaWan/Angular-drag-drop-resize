@@ -5,7 +5,7 @@ import { Component } from '@angular/core';
   template: `
     <nav class="navbar fixed-bottom navbar-dark bg-dark">
       <div class="navbar-text m-auto">
-          <a [attr.href]="link" target="_blank">{{author}} &copy; {{year}}</a>
+          <a target="_blank">POC - overview dashboard layout</a>
       </div>
     </nav>
   `,

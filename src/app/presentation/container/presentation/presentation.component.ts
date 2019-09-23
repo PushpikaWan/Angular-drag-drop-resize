@@ -17,17 +17,17 @@ import {map} from "rxjs/operators";
         prev: {{getPrevious()}}
         next: {{getNext()}}
       </span>
-      <button class="btn btn-sm btn-primary" (click)="goPrevious()" [class.disabled]="!hasPrevious()"> << </button>
+      <button class="btn btn-sm btn-primary" style="background-color: white; color: black; border: 0" (click)="goPrevious()" [class.disabled]="!hasPrevious()"> << </button>
       <button class="btn btn-sm btn-secondary btn-disabled">
 <!--        {{getCurrent() + 1}} / {{total}}-->
           {{getCurrent() + 1}}
       </button>
-      <button class="btn btn-sm btn-primary" (click)="goNext()" [class.disabled]="!hasNext()"> >> </button>
+      <button class="btn btn-sm btn-primary" style="background-color: white; color: black; border: 0" (click)="goNext()" [class.disabled]="!hasNext()"> >> </button>
     </div>
   `,
   styles: [`
     .counter {
-      margin-bottom: 4rem !important;
+      margin-bottom: 1rem !important;
     }
   `]
 })

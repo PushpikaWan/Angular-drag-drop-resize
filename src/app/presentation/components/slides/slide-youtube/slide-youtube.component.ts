@@ -1,15 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser'
-import { AbstractSlideComponent } from '../abstract-slide/abstract-slide.component'
+import { AbstractSlideComponent } from '../../common/abstract-slide/abstract-slide.component'
 
 @Component({
   selector: 'app-slide-youtube',
   template: `
     <app-abstract-slide [content]="content">
       <div class="text-center vh-75">
-        <iframe width="75%" height="75%" 
-            [attr.src]="trustedUrl" 
-            frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+        <iframe width="100%" height="100%" 
+            [attr.src]="trustedUrl" allowfullscreen></iframe>
       </div>
     </app-abstract-slide>
   `,

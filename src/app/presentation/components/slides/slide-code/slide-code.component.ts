@@ -1,5 +1,5 @@
 import { Component } from '@angular/core'
-import { AbstractSlideComponent } from '../abstract-slide/abstract-slide.component'
+import { AbstractSlideComponent } from '../../common/abstract-slide/abstract-slide.component'
 
 @Component({
   selector: 'app-slide-code',

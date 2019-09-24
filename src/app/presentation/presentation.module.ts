@@ -17,6 +17,8 @@ import {FigureDragSimpleComponent} from "./figures/figure-drag-simple/figure-dra
 import {DragDropModule} from "@angular/cdk/drag-drop";
 import {FigureDragDropCdkComponent} from "./figures/figure-drag-drop-cdk/figure-drag-drop-cdk.component";
 import {SlideTitleComponentDemo2} from "./components/slides/specific/slide-title_with_demo2/slide-title.component";
+import {FigureHtmlDragDropComponent} from "./figures/figure-html-drag-drop/figure-html-drag-drop.component";
+import {SlideTitleComponentDemo3} from "./components/slides/specific/slide-title_with_demo3/slide-title.component";
 
 const routes: Routes = [
   { path: '', component: PresentationComponent },
@@ -42,8 +44,10 @@ const routes: Routes = [
     SlideThankyouComponent,
     SlideTitleComponentDemo1,
     SlideTitleComponentDemo2,
+    SlideTitleComponentDemo3,
     FigureDragSimpleComponent,
-    FigureDragDropCdkComponent
+    FigureDragDropCdkComponent,
+    FigureHtmlDragDropComponent
   ],
   providers: [SlidesService]
 })

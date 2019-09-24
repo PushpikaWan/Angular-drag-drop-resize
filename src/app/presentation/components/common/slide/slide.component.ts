@@ -13,6 +13,7 @@ import { Component, Input } from '@angular/core'
     
     <app-slide-title_demo1 *ngIf="slide.type === 'app-slide-title_demo1'" [content]="slide.content"></app-slide-title_demo1>
     <app-slide-title_demo2 *ngIf="slide.type === 'app-slide-title_demo2'" [content]="slide.content"></app-slide-title_demo2>
+    <app-slide-title_demo3 *ngIf="slide.type === 'app-slide-title_demo3'" [content]="slide.content"></app-slide-title_demo3>
     <div *ngIf="unknown(slide.type)" class="slide">
       <h1>Unknown slide type: </h1>
       <pre>{{slide | json}}</pre>

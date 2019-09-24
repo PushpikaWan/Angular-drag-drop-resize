@@ -1,0 +1,38 @@
+.grid {
+  margin-top: 100px;
+  display: grid;
+  grid-gap: 3vh 1vw;
+  height: 300px;
+  width: 300px;
+  box-sizing: border-box;
+  padding: 3vh 1vw;
+  grid-template-columns: 1fr;
+  grid-auto-rows: 12vh;
+  border-color: black;
+  background-color:gray;
+}
+
+.item {
+  position: relative;
+  min-height: 50px;
+  padding: 10px;
+  transition: background 500ms, outline 500ms;
+  background-color: white;
+  font-size: 10px;
+}
+.grid .item:hover{
+  cursor: move;
+}
+
+.number-spinner{
+  width: 25px;
+}
+
+.boxheader {
+  display: inline;
+  padding: 10px 5px;
+  width: 100%;
+  z-index: 10;
+  background-color: #9de1f3;
+  color: #fff;
+}

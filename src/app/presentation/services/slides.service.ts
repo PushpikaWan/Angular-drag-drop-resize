@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { of } from 'rxjs';
 
 const slideTypes = ['title', 'list', 'image', 'code', 'html', 'youtube',
-  'thankyou','app-slide-title_demo1', 'app-slide-title_demo2'];
+  'thankyou','app-slide-title_demo1', 'app-slide-title_demo2', 'app-slide-title_demo3'];
 
 const slide = (type: string, content: any) => ({ type, content });
 const slideTitle = (title: string, subtitle: string, optionalList: string[],  html: string, notes: string[]) =>
@@ -18,6 +18,8 @@ const slideTitle_demo1 = (title: string, subtitle: string, optionalList: string[
   slide('app-slide-title_demo1', { title, subtitle, optionalList, html, notes});
 const slideTitle_demo2 = (title: string, subtitle: string, optionalList: string[],  html: string, notes: string[]) =>
   slide('app-slide-title_demo2', { title, subtitle, optionalList, html, notes});
+const slideTitle_demo3 = (title: string, subtitle: string, optionalList: string[],  html: string, notes: string[]) =>
+  slide('app-slide-title_demo3', { title, subtitle, optionalList, html, notes});
 
 @Injectable()
 export class SlidesService {
@@ -104,7 +106,7 @@ export class SlidesService {
       []
     ),
     // todo - add techniques with simple demo
-    slideTitle(
+    slideTitle_demo3(
       'Implementation - 03',
       '',
       [' @angular/cdk/drag-drop library not used',

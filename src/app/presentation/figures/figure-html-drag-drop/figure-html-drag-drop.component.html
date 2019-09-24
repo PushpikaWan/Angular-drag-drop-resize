@@ -1,0 +1,15 @@
+<div class="grid" id="grid">
+  <div class="item" *ngFor="let item of items | keyvalue; let i = index" tabindex="1"
+       (dragover)="handleDragOver($event)"
+       (drop)="handleDrop($event)"
+       (dragenter)="handleDragEnter($event)"
+       (dragexit)="handleDragExit($event)"
+       (dragleave)="handleDragLeave($event)"
+       (dragend)="handleDragEnd($event)"
+       (dragstart)="handleDragStart($event)"
+       draggable=true id="{{item.value.id}}">
+    <div>
+      <br/>{{item.value.id}}<br/>
+    </div>
+  </div>
+</div>

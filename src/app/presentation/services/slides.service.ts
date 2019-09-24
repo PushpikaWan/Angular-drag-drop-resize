@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
 import { of } from 'rxjs';
 
-const slideTypes = ['title', 'list', 'image', 'code', 'html', 'youtube', 'thankyou'];
+const slideTypes = ['title', 'list', 'image', 'code', 'html', 'youtube',
+  'thankyou','app-slide-title_demo1', 'app-slide-title_demo2'];
 
 const slide = (type: string, content: any) => ({ type, content });
 const slideTitle = (title: string, subtitle: string, optionalList: string[],  html: string, notes: string[]) =>
@@ -13,6 +14,11 @@ const slideHtml = (title: string, html: string) => slide('html', { title, html }
 const slideYouTube = (title: string, url: string) => slide('youtube', { title, url });
 const slideThankYou = () => slide('thankyou', { });
 
+const slideTitle_demo1 = (title: string, subtitle: string, optionalList: string[],  html: string, notes: string[]) =>
+  slide('app-slide-title_demo1', { title, subtitle, optionalList, html, notes});
+const slideTitle_demo2 = (title: string, subtitle: string, optionalList: string[],  html: string, notes: string[]) =>
+  slide('app-slide-title_demo2', { title, subtitle, optionalList, html, notes});
+
 @Injectable()
 export class SlidesService {
 
@@ -22,20 +28,20 @@ export class SlidesService {
       'https://angular.io/assets/images/logos/angular/angular.png',
     ),
     // todo add drag drop resize demo here
-    slideTitle(
+    slideTitle_demo1(
       'Requirements',
       ' A Dashboard layout that can hold widget ',
       ['Draggable', 'Droppable', 'Resizable', 'Responsive (lately added)'],
-      '<app-figure-drag-simple></app-figure-drag-simple>',
+      '',
       ['test note']
     ),
     slideTitle(
       'Requirements - extended',
       '',
       ['Widgets always have a prefered size',
-        'no limitation of how many grid rows a widget can stretch',
-        'always placed inside a dashboard. The dashboard can be locked or editable',
-        ' possible for the user to move the widgets around in the dashboard'],
+        'No limitation of how many grid rows a widget can stretch',
+        'Always placed inside a dashboard and dashboard can be locked or editable',
+        'Possible for the user to move the widgets around in the dashboard'],
       '<app-figure-drag-simple></app-figure-drag-simple>',
       ['test note']
     ),
@@ -44,14 +50,14 @@ export class SlidesService {
       'Background',
       '',
       ['There is a 3rd party library "gridster" provides same features',
-        'cannot use 3rd party library due to integration issues in cosmic',
+        'Cannot use 3rd party library due to integration issues in cosmic',
         ' Try to implement drag drop without 3rd party library',
         ' We come up with the 3 different implementations by evolving solution'],
       '',
       []
     ),
     // todo - add techniques with simple demo
-    slideTitle(
+    slideTitle_demo2(
       'Implementation - 01',
       '',
       ['Use @angular/cdk/drag-drop library',

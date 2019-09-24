@@ -12,6 +12,11 @@ import { SlideHtmlComponent } from './components/slides/slide-html/slide-html.co
 import { AbstractSlideComponent } from './components/common/abstract-slide/abstract-slide.component';
 import { SlideYoutubeComponent } from './components/slides/slide-youtube/slide-youtube.component'
 import {SlideThankyouComponent} from "./components/slides/slide-thankyou/slide-thankyou.component";
+import {SlideTitleComponentDemo1} from "./components/slides/specific/slide-title_with_demo1/slide-title.component";
+import {FigureDragSimpleComponent} from "./figures/figure-drag-simple/figure-drag-simple.component";
+import {DragDropModule} from "@angular/cdk/drag-drop";
+import {FigureDragDropCdkComponent} from "./figures/figure-drag-drop-cdk/figure-drag-drop-cdk.component";
+import {SlideTitleComponentDemo2} from "./components/slides/specific/slide-title_with_demo2/slide-title.component";
 
 const routes: Routes = [
   { path: '', component: PresentationComponent },
@@ -22,6 +27,7 @@ const routes: Routes = [
   imports: [
     CommonModule,
     RouterModule.forChild(routes),
+    DragDropModule
   ],
   declarations: [
     PresentationComponent,
@@ -33,7 +39,11 @@ const routes: Routes = [
     SlideHtmlComponent,
     AbstractSlideComponent,
     SlideYoutubeComponent,
-    SlideThankyouComponent
+    SlideThankyouComponent,
+    SlideTitleComponentDemo1,
+    SlideTitleComponentDemo2,
+    FigureDragSimpleComponent,
+    FigureDragDropCdkComponent
   ],
   providers: [SlidesService]
 })

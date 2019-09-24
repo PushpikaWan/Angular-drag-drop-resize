@@ -25,7 +25,17 @@ export class SlidesService {
     slideTitle(
       'Requirements',
       ' A Dashboard layout that can hold widget ',
-      ['Draggable', 'Droppable', 'Resizable'],
+      ['Draggable', 'Droppable', 'Resizable', 'Responsive (lately added)'],
+      '<app-figure-drag-simple></app-figure-drag-simple>',
+      ['test note']
+    ),
+    slideTitle(
+      'Requirements - extended',
+      '',
+      ['Widgets always have a prefered size',
+        'no limitation of how many grid rows a widget can stretch',
+        'always placed inside a dashboard. The dashboard can be locked or editable',
+        ' possible for the user to move the widgets around in the dashboard'],
       '<app-figure-drag-simple></app-figure-drag-simple>',
       ['test note']
     ),

@@ -4,8 +4,8 @@ import { of } from 'rxjs';
 const slideTypes = ['title', 'list', 'image', 'code', 'html', 'youtube', 'thankyou'];
 
 const slide = (type: string, content: any) => ({ type, content });
-const slideTitle = (title: string, subtitle: string, optionalList: string[], notes: string[]) =>
-  slide('title', { title, subtitle, optionalList, notes});
+const slideTitle = (title: string, subtitle: string, optionalList: string[],  html: string, notes: string[]) =>
+  slide('title', { title, subtitle, optionalList, html, notes});
 const slideList = (title: string, items: string[]) => slide('list', { title, items });
 const slideImage = (title: string, image: string) => slide('image', { title, image });
 const slideCode = (title: string, code: string, language: string) => slide('code', { title, code, language });
@@ -26,6 +26,7 @@ export class SlidesService {
       'Requirements',
       ' A Dashboard layout that can hold widget ',
       ['Draggable', 'Droppable', 'Resizable'],
+      '<app-figure-drag-simple></app-figure-drag-simple>',
       ['test note']
     ),
     // todo url - https://github.com/tiberiuzuld/angular-gridster2
@@ -36,6 +37,7 @@ export class SlidesService {
         'cannot use 3rd party library due to integration issues in cosmic',
         ' Try to implement drag drop without 3rd party library',
         ' We come up with the 3 different implementations by evolving solution'],
+      '',
       []
     ),
     // todo - add techniques with simple demo
@@ -45,6 +47,7 @@ export class SlidesService {
       ['Use @angular/cdk/drag-drop library',
         ' List based implementation (horizontally organized vertical list)',
         'No any 3rd party libraries (even if angular @angular/material - not a 3rd party lib)'],
+      '',
       []
     ),
     slideYouTube(
@@ -57,6 +60,7 @@ export class SlidesService {
       ['No Proper way to resize - due to list based implementation',
         'List only organized under same line (vertically or horizontally) - due to list based implementation',
         'Angular CDK drag and drop limitations with wrapping contents when dropped'],
+      '',
       []
     ),
     // todo - add techniques with simple demo
@@ -66,6 +70,7 @@ export class SlidesService {
       ['Use @angular/cdk/drag-drop library',
         'use @angular/material grid list (mat-grid-list) and grid-tile (mat-grid-tile)',
         'source - https://material.angular.io/components/grid-list/api'],
+      '',
       []
     ),
     slideYouTube(
@@ -78,8 +83,9 @@ export class SlidesService {
       '',
       [ 'Implementation tightly coupled with @angular/material lib and grid list',
         ' All rearranging and dropping alignment handled by mat-grid-list',
-        'Angular CDK drag and drop limitations with wrapping contents when dropped']
-      ,[]
+        'Angular CDK drag and drop limitations with wrapping contents when dropped'],
+      '',
+      []
     ),
     // todo - add techniques with simple demo
     slideTitle(
@@ -89,6 +95,7 @@ export class SlidesService {
         'Use pure html drag and drop features with angular services',
         ' services for - drag, drop, resize, rearrange and handling movements',
         'source - https://developer.mozilla.org/en-US/docs/Web/API/HTML_Drag_and_Drop_API'],
+      '',
       []
     ),
     slideYouTube(
@@ -101,6 +108,7 @@ export class SlidesService {
       ['Handling all the drag, drop and resize functionalities by using services can provide issues',
         'Need to handle all behaviours by hand without using cdk support',
         'Version handling need to be done by ourselves with angular version updates (to gain performance along with core updates)'],
+      '',
       []
     ),
 

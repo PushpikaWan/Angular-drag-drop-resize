@@ -22,7 +22,7 @@ import { AbstractSlideComponent } from '../../common/abstract-slide/abstract-sli
 export class SlideThankyouComponent extends AbstractSlideComponent implements OnInit {
   public trustedUrl
   constructor(private sanitizer: DomSanitizer) {
-    super()
+    super();
   }
   ngOnInit() {
     this.trustedUrl = this.sanitizer.bypassSecurityTrustResourceUrl(this.content.url)

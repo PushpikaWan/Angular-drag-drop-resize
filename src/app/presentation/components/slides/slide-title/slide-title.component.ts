@@ -9,6 +9,7 @@ import { AfterViewInit, Component, Input } from '@angular/core';
         <ul class="my-5">
             <li *ngFor="let item of content.optionalList"> <h2 class="my-5"> {{item}}</h2> </li>
         </ul>
+        <div [innerHtml]="content.html"></div>
     </div>
   `,
 })

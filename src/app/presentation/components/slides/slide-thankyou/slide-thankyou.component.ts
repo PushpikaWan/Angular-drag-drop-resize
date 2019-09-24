@@ -4,18 +4,17 @@ import { AbstractSlideComponent } from '../../common/abstract-slide/abstract-sli
 
 @Component({
   selector: 'app-slide-thankyou',
-  template: `
-      .heart ❤
-      .text
-      p T
-      p H
-      p A
-      p N
-      p K
-      p &nbsp;
-      p Y
-      p 0
-      p U
+  template: `<div class="jumbotron text-center">
+      <h1 class="display-3">Thank You!</h1>
+<!--      <p class="lead"><strong>Please check your email</strong> for further instructions on how to complete your account setup.</p>-->
+<!--      <hr>-->
+<!--      <p>-->
+<!--          Having trouble? <a href="">Contact us</a>-->
+<!--      </p>-->
+<!--      <p class="lead">-->
+<!--          <a class="btn btn-primary btn-sm" href="https://bootstrapcreative.com/" role="button">Continue to homepage</a>-->
+<!--      </p>-->
+  </div>
   `,
   styles: []
 })

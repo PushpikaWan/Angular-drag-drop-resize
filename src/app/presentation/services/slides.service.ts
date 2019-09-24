@@ -130,13 +130,13 @@ export class SlidesService {
       []
     ),
 
-    slideHtml(
-      'Some HTML code',
-      `<div class="text-center">
-        <h1>SOME HTML CODE! 😎</h1>
-      </div>
-      `
-    ),
+    // slideHtml(
+    //   'Some HTML code',
+    //   `<div class="text-center">
+    //     <h1>SOME HTML CODE! 😎</h1>
+    //   </div>
+    //   `
+    // ),
     slideThankYou()
   ];
 

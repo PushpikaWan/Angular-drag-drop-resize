@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core'
+import { AfterViewInit, Component, Input } from '@angular/core';
 
 @Component({
   selector: 'app-slide-title',
@@ -12,8 +12,15 @@ import { Component, Input } from '@angular/core'
     </div>
   `,
 })
-export class SlideTitleComponent {
+export class SlideTitleComponent implements AfterViewInit {
 
-  @Input() content
-
+  @Input() content;
+  ngAfterViewInit() {
+    console.clear();
+    console.log('============ Notes ========');
+    this.content.notes.forEach(
+      x => console.log(x)
+    );
+    console.log('===========================');
+  }
 }

@@ -15,9 +15,9 @@ import { AbstractSlideComponent } from '../../common/abstract-slide/abstract-sli
   styles: []
 })
 export class SlideYoutubeComponent extends AbstractSlideComponent implements OnInit {
-  public trustedUrl
+  public trustedUrl;
   constructor(private sanitizer: DomSanitizer) {
-    super()
+    super();
   }
   ngOnInit() {
     this.trustedUrl = this.sanitizer.bypassSecurityTrustResourceUrl(this.content.url)

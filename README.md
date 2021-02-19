@@ -2,6 +2,12 @@
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 8.1.2.
 
+## Info
+This project was built to find out feasible ways to drag and drop in Angular. Mainly there are three ways. You can find those mechanism with below branches
+  - lib_1.0 - which has simple CDK drag and drop
+  - lib_2.0 - which has a material grid-related implementation
+  - lib_3.0 - which has native HTML event driven drag and drop implementation 
+
 ## Development server
 
 Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
